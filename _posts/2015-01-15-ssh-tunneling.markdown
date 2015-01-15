@@ -3,6 +3,7 @@ layout: post
 title:  "SSH tunneling classics"
 date:   2015-01-15 17:17:12
 categories: ssh tricks
+comments: True
 ---
 ## Far, far away, behind NAT and firewall
 
