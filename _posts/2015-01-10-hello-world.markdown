@@ -4,7 +4,7 @@ title:  "Hello world and Dell Latitude E5440 configuration"
 date:   2015-01-10 18:55:32
 categories: configuration
 ---
-### Hello world!
+## Hello world!
 YAB is on the web. I had hard time picking right technology, what I wanted is blog as simple as it can get.
 At the end of the day Jekyll won over chirp and octopress.
 
@@ -13,7 +13,7 @@ At the end of the day Jekyll won over chirp and octopress.
 Installation of Jessie left me with two problems and right after that I want to restore my default setup.
 To the point!
 
-### Two problems with my Dell
+## Two problems with my Dell
 
 * WiFi not working.
 
@@ -34,7 +34,7 @@ To the point!
 
     `sudo aptitude install cpufreqd cpufrequtils`
 
-### Automate all the things!
+## Automate all the things!
 I use puppet but I don't want to start flame war.
 
 Some of the stuff is puppet code but of course I need to restore some files too like autofs, sudoers, hosts, etc..
