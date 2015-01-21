@@ -82,6 +82,7 @@ But if it works you can tell 'if it works from Djibouti than it works from every
 * -C - compress all data
 * -f - ssh will go to background
 * -i - pick file with private key
+* -A - forward your authentication via ssh
 * -X - forward X
 
 and don't forget `man ssh`
