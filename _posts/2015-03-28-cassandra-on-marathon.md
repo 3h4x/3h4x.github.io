@@ -64,7 +64,7 @@ SEED=`echo $(dig +short $SEED) | tr ' ' ','`
 ```
 This will extract ip's of cassandra seed from mesos-dns.
 
-
+#### json config
 ```
 {
     "id": "/ctrlpkw/db",
@@ -174,5 +174,184 @@ This will extract ip's of cassandra seed from mesos-dns.
 }
 
 ```
+
+Most important stuff in this cluster config is constraint on mesos to use unique hosts, otherwise it will try to deploy on hosts where ports are already occupied and it will fail.
+
+Cassandra needs ports open for it's own [gossip](https://www.datastax.com/documentation/cassandra/2.1/cassandra/architecture/architectureGossipAbout_c.html) configuration and they must be avaliable on mesos-slave ip. There is no chance right now to reconfigure cassandra.yaml in a way to use different ports for internode communication.
+```
+"ports": [
+    7199,
+    7000,
+    7001,
+    9160,
+    9042
+],
+```
+
+This is why additional configuration of docker is needed
+```
+"network": "HOST",
+"privileged": true
+```
+
+It allows to bind ports on mesos-slave instead of ip that was given by docker.
+
+Last but not least there is SEED environment which will be given to docker container
+```
+"env": {
+    "SEED": "cassandra-seed.db.ctrlpkw.marathon.mesos"
+},
+```
+If your rename the cluster be sure to change this dns address too, moreover every mesos slave needs to have mesos-dns configured.
+
+#### Scale up!
+
+This is the moment that I've been waiting on. We can modify cassandra app configuration on marathon and add additional nodes using scale or instances parameter
+
+```
+curl -L -H "Content-Type: application/json" -X PUT -d '{ "instances": 6 }' http://marathon/v2/apps/ctrlpkw/db/cassandra
+```
+
+### Full cluster with application
+
+We are just one step away from deploying our application with cassandra database on mesos using docker containers! Awesome :D
+
+```
+{
+  "id": "/ctrlpkw",
+  "groups": [
+    {
+      "id": "/ctrlpkw/db",
+      "apps": [
+          {
+              "id": "/ctrlpkw/db/cassandra-seed",
+              "constraints": [["hostname", "UNIQUE"]],
+              "ports": [7199, 7000, 7001, 9160, 9042],
+              "requirePorts": true,
+              "container": {
+                  "type": "DOCKER",
+                  "docker": {
+                      "image": "docker.touk.pl/cassandra",
+                      "network": "HOST",
+                      "privileged": true
+                  }
+              },
+              "env": {
+                  "SEED": "cassandra-seed.db.ctrlpkw.marathon.mesos"
+              },
+              "cpus": 4,
+              "mem": 4096.0,
+              "instances": 2,
+              "backoffSeconds": 1,
+              "backoffFactor": 1.15,
+              "maxLaunchDelaySeconds": 3600,
+              "healthChecks": [
+                  {
+                      "protocol": "TCP",
+                      "gracePeriodSeconds": 30,
+                      "intervalSeconds": 30,
+                      "portIndex": 4,
+                      "timeoutSeconds": 60,
+                      "maxConsecutiveFailures": 30
+                  }
+              ],
+              "upgradeStrategy": {
+                  "minimumHealthCapacity": 0.5,
+                  "maximumOverCapacity": 0.2
+              }
+          },
+          {
+              "id": "/ctrlpkw/db/cassandra",
+              "constraints": [["hostname", "UNIQUE"]],
+              "ports": [7199, 7000, 7001, 9160, 9042],
+              "requirePorts": true,
+              "container": {
+                  "type": "DOCKER",
+                  "docker": {
+                      "image": "docker.touk.pl/cassandra",
+                      "network": "HOST",
+                      "privileged": true
+                  }
+              },
+              "env": {
+                  "SEED": "cassandra-seed.db.ctrlpkw.marathon.mesos"
+              },
+              "cpus": 4,
+              "mem": 4096.0,
+              "instances": 1,
+              "backoffSeconds": 1,
+              "backoffFactor": 1.15,
+              "maxLaunchDelaySeconds": 3600,
+              "healthChecks": [
+                  {
+                      "protocol": "TCP",
+                      "gracePeriodSeconds": 30,
+                      "intervalSeconds": 30,
+                      "portIndex": 4,
+                      "timeoutSeconds": 60,
+                      "maxConsecutiveFailures": 30
+                  }
+              ],
+              "upgradeStrategy": {
+                  "minimumHealthCapacity": 0.5,
+                  "maximumOverCapacity": 0.2
+              }
+          }
+       ]
+    },
+    {
+      "id": "/ctrlpkw/app",
+      "apps": [
+          {
+              "id": "/ctrlpkw/app/ctrlpkw",
+              "container": {
+                  "type": "DOCKER",
+                  "docker": {
+                      "image": "trombka/ctrl-pkw:latest",
+                      "network": "BRIDGE",
+                      "portMappings": [
+                          {
+                              "containerPort": 8080,
+                              "servicePort": 8000,
+                              "protocol": "tcp"
+                          }
+                        ]
+                 }
+              },
+              "env": {
+                  "CASSANDRA_CONTACT_POINT": "10.151.151.18",
+                  "CASSANDRA_PORT": "9042"
+              },
+              "cpus": 1,
+              "mem": 512.0,
+              "instances": 1,
+              "backoffSeconds": 1,
+              "backoffFactor": 1.15,
+              "maxLaunchDelaySeconds": 3600,
+              "healthChecks": [
+                  {
+                      "protocol": "HTTP",
+                      "portIndex": 0,
+                      "timeoutSeconds": 60,
+                      "maxConsecutiveFailures": 3
+                  }
+              ],
+              "upgradeStrategy": {
+                  "minimumHealthCapacity": 0.5,
+                  "maximumOverCapacity": 0.2
+              },
+              "version": "2015-03-20T15:21Z"
+          }
+      ]
+    }
+  ]
+
+}
+```
+
+```
+curl -L -H "Content-Type: application/json" -X POST -d@ctrlpkw_cluster.json http://marathon/v2/apps
+```
+
 
 3h4x
