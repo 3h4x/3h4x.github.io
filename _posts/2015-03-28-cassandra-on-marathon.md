@@ -64,4 +64,115 @@ SEED=`echo $(dig +short $SEED) | tr ' ' ','`
 ```
 This will extract ip's of cassandra seed from mesos-dns.
 
+
+```
+{
+    "id": "/ctrlpkw/db",
+    "apps": [
+        {
+            "id": "/ctrlpkw/db",
+            "apps": [
+                {
+                    "id": "/ctrlpkw/db/cassandra-seed",
+                    "constraints": [
+                        [
+                            "hostname",
+                            "UNIQUE"
+                        ]
+                    ],
+                    "ports": [
+                        7199,
+                        7000,
+                        7001,
+                        9160,
+                        9042
+                    ],
+                    "requirePorts": true,
+                    "container": {
+                        "type": "DOCKER",
+                        "docker": {
+                            "image": "docker.touk.pl/cassandra",
+                            "network": "HOST",
+                            "privileged": true
+                        }
+                    },
+                    "env": {
+                        "SEED": "cassandra-seed.db.ctrlpkw.marathon.mesos"
+                    },
+                    "cpus": 4,
+                    "mem": 4096,
+                    "instances": 2,
+                    "backoffSeconds": 1,
+                    "backoffFactor": 1.15,
+                    "maxLaunchDelaySeconds": 3600,
+                    "healthChecks": [
+                        {
+                            "protocol": "TCP",
+                            "gracePeriodSeconds": 30,
+                            "intervalSeconds": 30,
+                            "portIndex": 4,
+                            "timeoutSeconds": 60,
+                            "maxConsecutiveFailures": 30
+                        }
+                    ],
+                    "upgradeStrategy": {
+                        "minimumHealthCapacity": 0.5,
+                        "maximumOverCapacity": 0.2
+                    }
+                },
+                {
+                    "id": "/ctrlpkw/db/cassandra",
+                    "constraints": [
+                        [
+                            "hostname",
+                            "UNIQUE"
+                        ]
+                    ],
+                    "ports": [
+                        7199,
+                        7000,
+                        7001,
+                        9160,
+                        9042
+                    ],
+                    "requirePorts": true,
+                    "container": {
+                        "type": "DOCKER",
+                        "docker": {
+                            "image": "docker.touk.pl/cassandra",
+                            "network": "HOST",
+                            "privileged": true
+                        }
+                    },
+                    "env": {
+                        "SEED": "cassandra-seed.db.ctrlpkw.marathon.mesos"
+                    },
+                    "cpus": 4,
+                    "mem": 4096,
+                    "instances": 1,
+                    "backoffSeconds": 1,
+                    "backoffFactor": 1.15,
+                    "maxLaunchDelaySeconds": 3600,
+                    "healthChecks": [
+                        {
+                            "protocol": "TCP",
+                            "gracePeriodSeconds": 30,
+                            "intervalSeconds": 30,
+                            "portIndex": 4,
+                            "timeoutSeconds": 60,
+                            "maxConsecutiveFailures": 30
+                        }
+                    ],
+                    "upgradeStrategy": {
+                        "minimumHealthCapacity": 0.5,
+                        "maximumOverCapacity": 0.2
+                    }
+                }
+            ]
+        }
+    ]
+}
+
+```
+
 3h4x
