@@ -47,16 +47,14 @@ mesos I got a task to create [cassandra](http://cassandra.apache.org/) cluster w
 
 No magic here, run `docker run -it 3h4x/cassandra` to start playing with
 cassandra node.
-But what we want to do is get cluster!
+It works but we want more!
 
-### Cluster
+### Cassandra cluster
 
-Cassandra use gossip protocol to communicate. Each node need to connect
-to seed node and from there it will get all nodes of cassandra in
-cluster eventually.
+Cassandra use [gossip protocol](http://en.wikipedia.org/wiki/Gossip_protocol) to communicate. Each node need to connect to seed node and from there it will get all nodes of cassandra in cluster eventually.
 
-So I have configured two cassandra type of nodes, seed and normal node
-which I can scale up or scale down.
+So I have configured two cassandra type of nodes, seed - just few of them
+to bootstrap cluster and normal node which I can scale up or scale down.
 
 To get what we need I used service discovery via [mesos-dns](http://mesosphere.github.io/mesos-dns/) so cassandra nodes can see cassandra seed never mind on which mesos slave they will be. To do it I just used simple bash script
 ```
@@ -212,6 +210,8 @@ This is the moment that I've been waiting on. We can modify cassandra app config
 curl -L -H "Content-Type: application/json" -X PUT -d '{ "instances": 6 }' http://marathon/v2/apps/ctrlpkw/db/cassandra
 ```
 
+I have tried to use parameter "scaleBy" which is in [marathon API](https://mesosphere.github.io/marathon/docs/rest-api.html). Well, better luck next time.
+
 ### Full cluster with application
 
 We are just one step away from deploying our application with cassandra database on mesos using docker containers! Awesome :D
@@ -319,8 +319,7 @@ We are just one step away from deploying our application with cassandra database
                  }
               },
               "env": {
-                  "CASSANDRA_CONTACT_POINT": "10.151.151.18",
-                  "CASSANDRA_PORT": "9042"
+                  "CASSANDRA_CONTACT_POINT": "",
               },
               "cpus": 1,
               "mem": 512.0,
@@ -349,9 +348,16 @@ We are just one step away from deploying our application with cassandra database
 }
 ```
 
+Let's deploy it!
+
 ```
 curl -L -H "Content-Type: application/json" -X POST -d@ctrlpkw_cluster.json http://marathon/v2/apps
 ```
 
+And here it is
+
+![cassandra-cluster]({{ site.url }}/assets/cassandra-cluster.png)
+
+> Bye bye, see you real soon!
 
 3h4x
