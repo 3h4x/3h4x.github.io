@@ -4,7 +4,6 @@ title:  "Cassandra on Marathon"
 date:   2015-03-28 10:21:38
 categories: cassandra marathon docker mesos
 comments: True
-published: false
 ---
 ## Mesos
 
