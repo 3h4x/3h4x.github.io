@@ -56,12 +56,15 @@ So I have configured two cassandra type of nodes, seed - just few of them
 to bootstrap cluster and normal node which I can scale up or scale down.
 
 To get what we need I used service discovery via [mesos-dns](http://mesosphere.github.io/mesos-dns/) so cassandra nodes can see cassandra seed never mind on which mesos slave they will be. To do it I just used simple bash script
+
 ```
 SEED=`echo $(dig +short $SEED) | tr ' ' ','`
 ```
+
 This will extract ip's of cassandra seed from mesos-dns.
 
 #### json config
+
 ```
 {
     "id": "/ctrlpkw/db",
@@ -175,6 +178,7 @@ This will extract ip's of cassandra seed from mesos-dns.
 Most important stuff in this cluster config is constraint on mesos to use unique hosts, otherwise it will try to deploy on hosts where ports are already occupied and it will fail.
 
 Cassandra needs ports open for it's own [gossip](https://www.datastax.com/documentation/cassandra/2.1/cassandra/architecture/architectureGossipAbout_c.html) configuration and they must be avaliable on mesos-slave ip. There is no chance right now to reconfigure cassandra.yaml in a way to use different ports for internode communication.
+
 ```
 "ports": [
     7199,
@@ -186,6 +190,7 @@ Cassandra needs ports open for it's own [gossip](https://www.datastax.com/docume
 ```
 
 This is why additional configuration of docker is needed
+
 ```
 "network": "HOST",
 "privileged": true
@@ -194,11 +199,13 @@ This is why additional configuration of docker is needed
 It allows to bind ports on mesos-slave instead of ip that was given by docker.
 
 Last but not least there is SEED environment which will be given to docker container
+
 ```
 "env": {
     "SEED": "cassandra-seed.db.ctrlpkw.marathon.mesos"
 },
 ```
+
 If your rename the cluster be sure to change this dns address too, moreover every mesos slave needs to have mesos-dns configured.
 
 #### Scale up!
