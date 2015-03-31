@@ -124,7 +124,7 @@ marathon](https://gist.github.com/3h4x/e12d80471602e17adb9a)
 Let's do it!
 
 ```
-curl -L -H "Content-Type: application/json" -X POST -d@ctrlpkw_cluster.json http://marathon/v2/apps
+curl -L -H "Content-Type: application/json" -X POST -d@ctrlpkw_cluster.json http://marathon/v2/groups
 ```
 
 And here it is
