@@ -23,6 +23,7 @@ Sounds fantastic and because I'm true fan of docker I went with
 
 In combination wiht some effort mesos can replace existing
 infrastructure making it more:
+
 * manageble
 * efficient
 * easier to access
