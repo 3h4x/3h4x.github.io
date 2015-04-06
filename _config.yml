@@ -9,7 +9,8 @@ twitter_username: 3h4xx
 github_username: 3h4x
 
 # Build settings
-markdown: kramdown
+#markdown: kramdown
+markdown: redcarpet
 
 pages_list:
   About: '/about'
