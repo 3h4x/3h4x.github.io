@@ -66,12 +66,116 @@ This will extract ip's of cassandra seed from mesos-dns.
 
 #### json config
 
-Take a look at posted gist. At first glance I wasn't quite sure how to
-deploy it but then I sunk my teeth in and figured it all out.
+At first glance I wasn't quite sure how to deploy it but then I sunk my teeth in and figured it all out. [Marathon API](https://mesosphere.github.io/marathon/docs/rest-api.html) and [Cassandra documentation](http://docs.datastax.com/en/cassandra/2.1/cassandra/gettingStartedCassandraIntro.html) was very helpful
 
-[gist with json to deploy cassandra cluster on
-marathon](https://gist.github.com/3h4x/f97c9387e5874686c2ce)
-
+```
+{
+    "id": "/ctrlpkw/db",
+    "apps": [
+        {
+            "id": "/ctrlpkw/db",
+            "apps": [
+                {
+                    "id": "/ctrlpkw/db/cassandra-seed",
+                    "constraints": [
+                        [
+                            "hostname",
+                            "UNIQUE"
+                        ]
+                    ],
+                    "ports": [
+                        7199,
+                        7000,
+                        7001,
+                        9160,
+                        9042
+                    ],
+                    "requirePorts": true,
+                    "container": {
+                        "type": "DOCKER",
+                        "docker": {
+                            "image": "docker.touk.pl/cassandra",
+                            "network": "HOST",
+                            "privileged": true
+                        }
+                    },
+                    "env": {
+                        "SEED": "cassandra-seed.db.ctrlpkw.marathon.mesos"
+                    },
+                    "cpus": 4,
+                    "mem": 4096,
+                    "instances": 2,
+                    "backoffSeconds": 1,
+                    "backoffFactor": 1.15,
+                    "maxLaunchDelaySeconds": 3600,
+                    "healthChecks": [
+                        {
+                            "protocol": "TCP",
+                            "gracePeriodSeconds": 30,
+                            "intervalSeconds": 30,
+                            "portIndex": 4,
+                            "timeoutSeconds": 60,
+                            "maxConsecutiveFailures": 30
+                        }
+                    ],
+                    "upgradeStrategy": {
+                        "minimumHealthCapacity": 0.5,
+                        "maximumOverCapacity": 0.2
+                    }
+                },
+                {
+                    "id": "/ctrlpkw/db/cassandra",
+                    "constraints": [
+                        [
+                            "hostname",
+                            "UNIQUE"
+                        ]
+                    ],
+                    "ports": [
+                        7199,
+                        7000,
+                        7001,
+                        9160,
+                        9042
+                    ],
+                    "requirePorts": true,
+                    "container": {
+                        "type": "DOCKER",
+                        "docker": {
+                            "image": "docker.touk.pl/cassandra",
+                            "network": "HOST",
+                            "privileged": true
+                        }
+                    },
+                    "env": {
+                        "SEED": "cassandra-seed.db.ctrlpkw.marathon.mesos"
+                    },
+                    "cpus": 4,
+                    "mem": 4096,
+                    "instances": 1,
+                    "backoffSeconds": 1,
+                    "backoffFactor": 1.15,
+                    "maxLaunchDelaySeconds": 3600,
+                    "healthChecks": [
+                        {
+                            "protocol": "TCP",
+                            "gracePeriodSeconds": 30,
+                            "intervalSeconds": 30,
+                            "portIndex": 4,
+                            "timeoutSeconds": 60,
+                            "maxConsecutiveFailures": 30
+                        }
+                    ],
+                    "upgradeStrategy": {
+                        "minimumHealthCapacity": 0.5,
+                        "maximumOverCapacity": 0.2
+                    }
+                }
+            ]
+        }
+    ]
+}
+```
 Most important stuff in this cluster config is constraint on mesos to use unique hosts, otherwise it will try to deploy on hosts where ports are already occupied and it will fail.
 
 Cassandra needs ports open for it's own [gossip](https://www.datastax.com/documentation/cassandra/2.1/cassandra/architecture/architectureGossipAbout_c.html) configuration and they must be avaliable on mesos-slave ip. There is no chance right now to reconfigure cassandra.yaml in a way to use different ports for internode communication.
@@ -119,8 +223,140 @@ I have tried to use parameter "scaleBy" which is in [marathon API](https://mesos
 
 We are just one step away from deploying our application with cassandra database on mesos using docker containers! Awesome :D
 
-And here is [gist with json to deploy cluster with cassandra and app on
-marathon](https://gist.github.com/3h4x/e12d80471602e17adb9a)
+And here is json to deploy cluster with cassandra and app on marathon
+
+```
+{
+  "id": "/ctrlpkw",
+  "groups": [
+    {
+      "id": "/ctrlpkw/db",
+      "apps": [
+          {
+              "id": "/ctrlpkw/db/cassandra-seed",
+              "constraints": [["hostname", "UNIQUE"]],
+              "ports": [7199, 7000, 7001, 9160, 9042],
+              "requirePorts": true,
+              "container": {
+                  "type": "DOCKER",
+                  "docker": {
+                      "image": "docker.touk.pl/cassandra",
+                      "network": "HOST",
+                      "privileged": true
+                  }
+              },
+              "env": {
+                  "SEED": "cassandra-seed.db.ctrlpkw.marathon.mesos"
+              },
+              "cpus": 4,
+              "mem": 4096.0,
+              "instances": 2,
+              "backoffSeconds": 1,
+              "backoffFactor": 1.15,
+              "maxLaunchDelaySeconds": 3600,
+              "healthChecks": [
+                  {
+                      "protocol": "TCP",
+                      "gracePeriodSeconds": 30,
+                      "intervalSeconds": 30,
+                      "portIndex": 4,
+                      "timeoutSeconds": 60,
+                      "maxConsecutiveFailures": 30
+                  }
+              ],
+              "upgradeStrategy": {
+                  "minimumHealthCapacity": 0.5,
+                  "maximumOverCapacity": 0.2
+              }
+          },
+          {
+              "id": "/ctrlpkw/db/cassandra",
+              "constraints": [["hostname", "UNIQUE"]],
+              "ports": [7199, 7000, 7001, 9160, 9042],
+              "requirePorts": true,
+              "container": {
+                  "type": "DOCKER",
+                  "docker": {
+                      "image": "docker.touk.pl/cassandra",
+                      "network": "HOST",
+                      "privileged": true
+                  }
+              },
+              "env": {
+                  "SEED": "cassandra-seed.db.ctrlpkw.marathon.mesos"
+              },
+              "cpus": 4,
+              "mem": 4096.0,
+              "instances": 1,
+              "backoffSeconds": 1,
+              "backoffFactor": 1.15,
+              "maxLaunchDelaySeconds": 3600,
+              "healthChecks": [
+                  {
+                      "protocol": "TCP",
+                      "gracePeriodSeconds": 30,
+                      "intervalSeconds": 30,
+                      "portIndex": 4,
+                      "timeoutSeconds": 60,
+                      "maxConsecutiveFailures": 30
+                  }
+              ],
+              "upgradeStrategy": {
+                  "minimumHealthCapacity": 0.5,
+                  "maximumOverCapacity": 0.2
+              }
+          }
+       ]
+    },
+    {
+      "id": "/ctrlpkw/app",
+      "apps": [
+          {
+              "id": "/ctrlpkw/app/ctrlpkw",
+              "container": {
+                  "type": "DOCKER",
+                  "docker": {
+                      "image": "trombka/ctrl-pkw:latest",
+                      "network": "BRIDGE",
+                      "portMappings": [
+                          {
+                              "containerPort": 8080,
+                              "servicePort": 8000,
+                              "protocol": "tcp"
+                          }
+                        ]
+                 }
+              },
+              "env": {
+                  "CASSANDRA_CONTACT_POINT":
+                  "cassandra-seed.db.ctrlpkw.marathon.mesos",
+              },
+              "cpus": 1,
+              "mem": 512.0,
+              "instances": 1,
+              "backoffSeconds": 1,
+              "backoffFactor": 1.15,
+              "maxLaunchDelaySeconds": 3600,
+              "healthChecks": [
+                  {
+                      "protocol": "HTTP",
+                      "portIndex": 0,
+                      "timeoutSeconds": 60,
+                      "maxConsecutiveFailures": 3
+                  }
+              ],
+              "upgradeStrategy": {
+                  "minimumHealthCapacity": 0.5,
+                  "maximumOverCapacity": 0.2
+              },
+              "version": "2015-03-20T15:21Z"
+          }
+      ]
+    }
+  ]
+
+}
+```
 
 Let's do it!
 
