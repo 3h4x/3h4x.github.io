@@ -35,7 +35,7 @@ UDP - user datagram protocol
 
 ## How it works
 
-Let's get down to business - what's going on when you type `traceroute domain-name.com`
+Let's get down to business - what's going on when you type `traceroute 3h4x.github.io`
 
 ### Request
 Traceroute prepares UDP segments and sends it over the network to destination address.  
