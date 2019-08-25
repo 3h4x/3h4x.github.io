@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  jelyll:
+    build: .
+    ports:
+      - "4000:4000"
+    networks:
+      - overlay
+    volumes:
+       - .:/srv/jekyll
+
+volumes:
+  db-data:
+
+networks:
+  overlay:
