@@ -16,6 +16,8 @@ If you want to know which path that packet took then you will use traceroute.
 
 Traceroute for you, for you and for you! Traceroute for everybody!
 
+<!-- readmore -->
+
 ### Pre
 
 > To understand this part you need knowledge of OSI model (maybe just transport and network layer will be enough)

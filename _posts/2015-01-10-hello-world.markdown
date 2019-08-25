@@ -12,6 +12,7 @@ At the end of the day Jekyll won over chirp and octopress.
 `exit 0`
 
 Installation of Jessie left me with two problems and right after that I want to restore my default setup.
+<!-- readmore -->
 To the point!
 
 ## Two problems with my Dell

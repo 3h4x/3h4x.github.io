@@ -21,6 +21,7 @@ Sounds fantastic and because I'm true fan of docker I went with
 > which is a cluster-wide init and control system for
 > services in cgroups or Docker containers
 
+<!-- readmore -->
 In combination wiht some effort mesos can replace existing
 infrastructure making it more:
 

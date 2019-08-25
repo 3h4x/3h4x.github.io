@@ -1,21 +1,21 @@
 # Site settings
 title: YAB
-email: ochach+yab@gmail.com
+email: 3h4x.github.io@gmail.com
 description: >
-  YAB - yet another blog
+  yet another blog
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://3h4x.github.io" # the base hostname & protocol for your site
-twitter_username: 3h4xx
 github_username: 3h4x
 
 # Build settings
-#markdown: kramdown
-markdown: redcarpet
+markdown: kramdown
 
 pages_list:
   About: '/about'
   Archive: '/archive'
   Feed: '/atom.xml'
 
-gems:
+excerpt_separator: <!-- readmore -->
+
+plugins:
   - jekyll-sitemap
