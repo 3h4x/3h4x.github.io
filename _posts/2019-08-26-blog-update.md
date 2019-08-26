@@ -9,6 +9,7 @@ Hey!
 
 I haven't been around here for quite some time. I know that you - random internet person - don't really care so let's get to the point.
 My blog was created with simplicity in mind but when I've returned after break I had to do improvements.
+<!-- readmore -->
 
 ### Where is Docker?
 
@@ -20,7 +21,6 @@ Yes!
 
 Well not quite. First let's deal with problems.
 
-<!-- readmore -->
 ### Jekyll redcarpet problem
 ```
 Dependency Error: Yikes! It looks like you don't have redcarpet or one of its dependencies installed. In order to use Jekyll as currently configured, you'll need to install this gem. The full error message from Ruby is: 'cannot load such file -- redcarpet' If you run into trouble, you can find helpful resources at https://jekyllrb.com/help/!
