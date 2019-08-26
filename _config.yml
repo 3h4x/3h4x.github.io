@@ -1,9 +1,9 @@
 # Site settings
-title: YAB
+title: 3h4x.github.io
 email: 3h4x.github.io@gmail.com
 description: >
-  yet another blog
-baseurl: "" # the subpath of your site, e.g. /blog/
+   YAB - yet another blog
+baseurl: ""
 url: "http://3h4x.github.io" # the base hostname & protocol for your site
 github_username: 3h4x
 
@@ -11,6 +11,7 @@ github_username: 3h4x
 markdown: kramdown
 
 pages_list:
+  Tags: '/tags'
   About: '/about'
   Archive: '/archive'
   Feed: '/atom.xml'
