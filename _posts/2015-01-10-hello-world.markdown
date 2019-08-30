@@ -3,6 +3,7 @@ layout: post
 title:  "Hello world and Dell Latitude E5440 configuration"
 date:   2015-01-10 18:55:32
 categories: configuration
+tags: puppet dell vim bash
 comments: True
 ---
 ## Hello world!

@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Updating this blog"
-categories: blog
+categories: jekyll
 tags: [jekyll, liquid, docker]
 comments: True
 ---
