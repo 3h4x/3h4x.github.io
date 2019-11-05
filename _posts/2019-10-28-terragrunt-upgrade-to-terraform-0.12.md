@@ -51,7 +51,7 @@ First I've create helper commands migrating envs in infra-live to `terragrunt19`
 - yaml it:  
     `find . -name 'region.yaml' -exec sed -i.bak -e 's/ =/:/' {} \;`
 - clean temp files:  
-    `git clean -fd`
+    `git clean -e '*.hcl' -e '*.yaml' -f`
     
 ### Infrastructure modules
 
