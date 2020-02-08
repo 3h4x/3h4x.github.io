@@ -19,3 +19,4 @@ excerpt_separator: <!-- readmore -->
 
 plugins:
   - jekyll-sitemap
+  - jekyll-seo-tag
