@@ -4,19 +4,36 @@ email: 3h4x.github.io@gmail.com
 description: >
    YAB - yet another blog
 baseurl: ""
-url: "http://3h4x.github.io" # the base hostname & protocol for your site
+url: "http://3h4x.github.io"
 github_username: 3h4x
+
+author:
+  name: 3h4x
+  email: "3h4x.github.io@gmail.com"
 
 # Build settings
 markdown: kramdown
 
 pages_list:
   Archive: '/archive'
-  Feed: '/atom.xml'
   Tags: '/tags'
+
+google_analytics: 'UA-58462461-1'
+
+theme: minima
 
 excerpt_separator: <!-- readmore -->
 
 plugins:
   - jekyll-sitemap
   - jekyll-seo-tag
+  - jekyll-feed
+
+minima:
+  social_links:
+    github: 3h4x
+    rss: rss
+
+  disqus:
+    shortname: 3h4xgithubio
+
