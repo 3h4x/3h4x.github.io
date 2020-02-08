@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Tags
-permalink: /Tags/
+permalink: /tags/
 ---
 
 <div class="post">
