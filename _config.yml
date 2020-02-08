@@ -11,10 +11,9 @@ github_username: 3h4x
 markdown: kramdown
 
 pages_list:
-  about: '/about'
-  archive: '/archive'
-  feed: '/atom.xml'
-  tags: '/tags'
+  Archive: '/archive'
+  Feed: '/atom.xml'
+  Tags: '/tags'
 
 excerpt_separator: <!-- readmore -->
 
