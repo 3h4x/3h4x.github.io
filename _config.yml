@@ -21,6 +21,7 @@ pages_list:
 google_analytics: 'UA-58462461-1'
 
 theme: minima
+show_excerpts: true
 
 excerpt_separator: <!-- readmore -->
 
