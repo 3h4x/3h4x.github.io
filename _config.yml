@@ -2,7 +2,9 @@
 title: 3h4x.github.io
 email: 3h4x.github.io@gmail.com
 description: >
-   YAB - yet another blog
+  YAB - yet another blog on the internet!
+  Container orchestration, observability tools, continuous intergration/delivery/deployment, terraform infrastructure
+  as code, cloud like AWS/GCP and any other technology I use.
 baseurl: ""
 url: "https://3h4x.github.io"
 github_username: 3h4x

@@ -8,7 +8,9 @@ comments: True
 Hey!
 
 I haven't been around here for quite some time. I know that you - random internet person - don't really care so let's get to the point.
-My blog was created with simplicity in mind but when I've returned after break I had to do improvements.
+My blog was created with simplicity in mind but when I've returned after break I had to do improvements.  
+In this post I will explain what was done to improve it!  
+ 
 <!-- readmore -->
 
 ### Where is Docker?
