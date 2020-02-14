@@ -30,6 +30,16 @@ layout: default
     {{ content }}
   </div>
 
+  <hr>
+
+  Read more in related post with related tags:
+  <ul>
+  {% for tag in page.tags %}
+      <li><a href="/tags/#{{ tag }}">{{ tag }}</a></li>
+  {% endfor %}
+  </ul>
+
+
   {%- if site.disqus.shortname -%}
     {%- include disqus_comments.html -%}
   {%- endif -%}
