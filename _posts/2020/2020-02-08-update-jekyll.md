@@ -2,7 +2,7 @@
 layout: post
 title:  "Jekyll upgrade to version 4.0.0 with theme change"
 categories: jekyll
-tags: [jekyll, github-pages]
+tags: [jekyll, liquid, github-pages]
 comments: True
 ---
 
