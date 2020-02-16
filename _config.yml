@@ -28,7 +28,6 @@ show_excerpts: true
 excerpt_separator: <!-- readmore -->
 
 plugins:
-  - jekyll-sitemap
   - jekyll-seo-tag
   - jekyll-feed
 
