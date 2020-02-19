@@ -5,9 +5,6 @@ date:   2015-03-28 10:21:38
 categories: cassandra marathon docker mesos
 comments: True
 ---
-## Mesos
-
-### Mesos & Marathon
 Recently all I talk about is [mesos](http://mesos.apache.org/) and mesos on mesos ;)
 
 > Apache Mesos abstracts CPU, memory, storage, and other compute

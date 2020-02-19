@@ -6,7 +6,8 @@ categories: configuration
 tags: puppet dell vim bash
 comments: True
 ---
-## Hello world!
+### Hello world!
+
 YAB is on the web. I had hard time picking right technology, what I wanted is blog as simple as it can get.
 At the end of the day Jekyll won over chirp and octopress.
 

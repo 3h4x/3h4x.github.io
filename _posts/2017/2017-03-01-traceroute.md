@@ -5,8 +5,6 @@ categories: network
 tags: [network, linux, tools]
 comments: True
 ---
-## Traceroute
-
 > Traceroute is a diagnostic program that will show route of the packets in the network.
 
 When you request a HTTP site like this blog, you request will traverse network to the destination and server there will generate response for you.

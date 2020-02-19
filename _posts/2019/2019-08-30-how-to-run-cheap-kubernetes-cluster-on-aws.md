@@ -5,7 +5,7 @@ categories: [kubernetes, aws]
 tags: [aws, cloud, ec2, kubernetes, cost, kops]
 comments: True
 ---
-## Kubernetes
+### Kubernetes
 
 After containerization boom started, people realized that scheduling it is not as easy as it should be. That's why I have interest in `mesos`, `docker swarm`, `rancher`, `nomad` and `k8s`. There's a need for a system that will take care of correct scheduling, priorities, eviction, logs, simple cluster scaling, upgrades, deployment methods, permissions and so on... 
 My first experience with `prod` grade `k8s` cluster was during time I worked for [Spreaker/Voxnest](https://voxnest.com). When I joined we had `1.4` and throughout the years it was updated to `1.12` (AFAIR). I've learned a lot, our relation (mine and `k8s` :D) had ups and downs but I was mostly satisfied and amazed by it.  
