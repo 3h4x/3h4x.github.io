@@ -8,8 +8,8 @@ comments: True
 
 Choosing provider for private git repositories back in the day was though. 
 
-`GitHub` was most known back then and I'd even say iconic. [They started to offer unlimited private repos for paid plans 
-in 2016.](https://github.blog/2016-05-11-introducing-unlimited-private-repositories/)
+`GitHub` is most known and I'd even say iconic. [They started to offer unlimited private repos for paid plans 
+in 2016.](https://github.blog/2016-05-11-introducing-unlimited-private-repositories/)  
 `GitLab` and `BitBucket`  at that time offered unlimited private repositories. Wow! They got me.  
 Currently also `GitHub` provides unlimited private repositories and with recent introduction of `GitHub actions` I think 
 it's good time to do the comparison between them and see who provide best services in free plan.
