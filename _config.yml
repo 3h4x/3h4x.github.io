@@ -30,7 +30,7 @@ excerpt_separator: <!-- readmore -->
 plugins:
   - jekyll-seo-tag
   - jekyll-feed
-
+  - jemoji
 minima:
   social_links:
     github: 3h4x

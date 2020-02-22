@@ -2,7 +2,7 @@
 layout: post
 title:  "How to run cheap Kubernetes cluster on AWS? pt1"
 categories: [kubernetes, aws]
-tags: [aws, cloud, ec2, kubernetes, cost, kops]
+tags: [aws, cloud, ec2, kubernetes, cost reduction, kops]
 comments: True
 ---
 ### Kubernetes

@@ -2,7 +2,7 @@
 layout: post
 title:  "Terragrunt upgrade to terraform 0.12"
 categories: terraform
-tags: [terraform, terragrunt, IaC]
+tags: [terraform, terragrunt, infrastructure as code]
 comments: True
 ---
 
