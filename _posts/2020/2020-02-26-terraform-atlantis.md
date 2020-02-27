@@ -2,7 +2,7 @@
 layout: post
 title:  "Infrastructure continuous deployment with terraform and atlantis"
 categories: tech
-tags: [cicd, terraform, aws, k8s, ecs]
+tags: [cicd, terraform, aws, kubernetes, ecs]
 comments: True
 ---
 
