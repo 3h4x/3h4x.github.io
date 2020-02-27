@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Free git repository for private projects - GitHub vs GitLab vs BitBucket"
-categories: git
+categories: tech
 tags: [git, cost reduction]
 comments: True
 ---

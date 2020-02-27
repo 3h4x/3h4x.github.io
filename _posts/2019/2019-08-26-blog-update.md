@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Updating this blog"
-categories: jekyll
+categories: tech
 tags: [jekyll, liquid, docker]
 comments: True
 ---
@@ -22,23 +22,23 @@ Yes!
 Well not quite. First let's deal with problems.
 
 ### Jekyll redcarpet problem
-```
+{% highlight shell %}
 Dependency Error: Yikes! It looks like you don't have redcarpet or one of its dependencies installed. In order to use Jekyll as currently configured, you'll need to install this gem. The full error message from Ruby is: 'cannot load such file -- redcarpet' If you run into trouble, you can find helpful resources at https://jekyllrb.com/help/!
-```
+{% endhighlight %}
 When I started I chose `redcarpet` (unfortunately I cannot remember exact rationale behind picking it up) **but** it seems it's not default `markdown` render and is not in `docker` image.
 Default one is [`kramdown`](https://jekyllrb.com/docs/configuration/markdown/#kramdown), let's go with that as it's already present and default for `jekyll`.
 
 ### Small updates
 
-```
+{% highlight shell %}
 Deprecation: The 'gems' configuration option has been renamed to 'plugins'. Please update your config file accordingly.
-```
+{% endhighlight %}
 Right! Let's follow instruction and update [`_config.yaml`](https://github.com/3h4x/3h4x.github.io/blob/c208e4308dc92df59eaa6a74a3cb6cb5a33b4713/_config.yml#L20)
 
 {% raw %}
-```
+{% highlight shell %}
 Liquid Warning: Liquid syntax error (line 105): [:dot, "."] is not a valid expression in "{{ .NetworkSettings.IPAddress }}" in /srv/jekyll/_posts/2015-04-02-mesos-dns.md
-```
+{% endhighlight %}
 {% endraw %}
 Gotcha. That's annoying and I wonder how I didn't see it in the past?
 

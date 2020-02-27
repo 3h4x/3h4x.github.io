@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "How traceroute works"
-categories: network
-tags: [network, linux, tools]
+categories: tech
+tags: [network, tools]
 comments: True
 ---
 > Traceroute is a diagnostic program that will show route of the packets in the network.
@@ -20,7 +20,9 @@ Traceroute for you, for you and for you! Traceroute for everybody!
 
 > To understand this part you need knowledge of OSI model (maybe just transport and network layer will be enough)
 
-`-r-sr-xr-x  1 root  wheel    37K 14 wrz 02:56 /usr/sbin/traceroute`
+{% highlight shell %}
+-r-sr-xr-x  1 root  wheel    37K 14 wrz 02:56 /usr/sbin/traceroute
+{% endhighlight %}
 
 Funny thing what the 's' in permissions means. Maybe I will get on to that in my next post.
 
@@ -59,7 +61,7 @@ Next lines are composed of TTL value, domain name, IP address and three values o
 
 ### Example
 
-```
+{% highlight shell %}
 traceroute to wp.pl (212.77.98.9), 64 hops max, 100 byte packets
 
  1  192.168.8.1 (192.168.8.1)  1.783 ms  1.498 ms  2.006 ms
@@ -68,7 +70,7 @@ traceroute to wp.pl (212.77.98.9), 64 hops max, 100 byte packets
  4  wp.plix.pl (195.182.218.204)  6.622 ms  6.373 ms  6.545 ms
  5  rtr2.rtr-int-2.adm.wp-sa.pl (212.77.96.69)  11.773 ms
     rtr2.rtr-int-1.adm.wp-sa.pl (212.77.96.65)  10.637 ms  10.719 ms
-```
+{% endhighlight %}
 
 I have picked this example to show that **routing is not static**.  
 Everything can change and internet has a lot moving parts.  

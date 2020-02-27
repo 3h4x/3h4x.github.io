@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "How to run cheap Kubernetes cluster on AWS? pt1"
-categories: [kubernetes, aws]
+categories: tech
 tags: [aws, cloud, ec2, kubernetes, cost reduction, kops]
 comments: True
 ---
@@ -55,11 +55,11 @@ It's important to understand that scheduling `pods` or `deployments` won't work 
 
 To override it and schedule stuff on `k8s master` we have two options:
 - remove taint `node-role.kubernetes.io/master:NoSchedule` from `k8s master` node
-```bash
+{% highlight shell %}
 kubectl taint node {{node-name}} node-role.kubernetes.io/master:NoSchedule-
-```
+{% endhighlight %}
 - adding toleration to `pod`/`deployment`/`daemonset` etc
-```yaml
+{% highlight yaml %}
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -75,7 +75,7 @@ spec:
         tolerations:
         - effect: NoSchedule
             key: node-role.kubernetes.io/master
-```
+{% endhighlight %}
 
 I have removed almost everything beside `tolerations`. I hope it's readable and understandable.
 
@@ -160,7 +160,7 @@ So why `ingress` with `ALB` is good?
 - exposing services automatically can speed up time to market
 
 Here's example:
-```yaml
+{% highlight yaml %}
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -184,7 +184,7 @@ spec:
           - backend:
               serviceName: grafana
               servicePort: 3001
-```
+{% endhighlight %}
 
 
 #### Route53

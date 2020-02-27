@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Infrastructure continuous deployment with terraform and atlantis"
-categories: cicd
+categories: tech
 tags: [cicd, terraform, aws, k8s, ecs]
 comments: True
 ---
@@ -118,7 +118,7 @@ There is a bit overhead to create additional VPC and ALB and so on but it gives
 better isolation, which at the end of the day gives us more secure environment.
 
 Enabling it with `terraform`:
-```hcl-terraform
+{% highlight terraform %}
 data "github_ip_ranges" "current" {}
 
 module "atlantis" {
@@ -148,10 +148,10 @@ module "atlantis" {
     }
   ]
 }
-```
+{% endhighlight %}
 
 Additionally we used [CloudPosse module](https://github.com/cloudposse/terraform-github-repository-webhooks) to create github webhook for `atlantis`
-```hcl-terraform
+{% highlight terraform %}
 module "github_webhooks" {
   source              = "git::https://github.com/cloudposse/terraform-github-repository-webhooks.git?ref=0.5.0"
   github_organization = var.organization
@@ -164,14 +164,14 @@ module "github_webhooks" {
   events               = ["pull_request_review", "push", "issue_comment", "pull_request"]
   webhook_secret       = module.atlantis.webhook_secret
 }
-```
+{% endhighlight %}
 
 ### Deployment on Kubernetes
 
 In my private `k8s` cluster I use `helm` to deploy `atlantis`. It has it's own namespace where only `atlantis` is deployed.
 
 Here is `helm` configuration:
-```yaml
+{% highlight yaml %}
 orgWhitelist: 'org'
 defaultTFVersion: 0.12.20
 gitlab:
@@ -198,7 +198,7 @@ repoConfig: |
        steps: [apply]
 allowForkPRs: false
 disableApplyAll: false
-```
+{% endhighlight %}
 
 To prevent commiting credentials to repository where helm configuration is we need to create two secrets:
 - `vcsSecretName` contains `gitlab_secret` and `gitlab_token`
@@ -209,7 +209,7 @@ basically create encrypted Secret in SealedSecret resource. Such resources can o
 it's safe to have them even in public repository although I would advice against that. 
 
 Deploying process:  
-```sh
+{% highlight console %}
 # Create secrets
 kubectl apply -f kubernetes/secrets/atlantis.yaml
 # Update helm
@@ -217,7 +217,7 @@ helm repo add stable https://kubernetes-charts.storage.googleapis.com
 helm repo update
 # Upgrade deployment
 helm upgrade -n atlantis -f kubernetes/atlantis.yaml atlantis stable/atlantis
-```
+{% endhighlight %}
 
 
 ## [Security](https://www.runatlantis.io/docs/security.html)

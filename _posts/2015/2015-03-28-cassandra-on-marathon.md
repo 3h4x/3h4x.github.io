@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Cassandra on Marathon"
-date:   2015-03-28 10:21:38
-categories: cassandra marathon docker mesos
+categories: tech
+tags: [cassandra, marathon, docker, mesos]
 comments: True
 ---
 Recently all I talk about is [mesos](http://mesos.apache.org/) and mesos on mesos ;)
@@ -56,9 +56,9 @@ to bootstrap cluster and normal node which I can scale up or scale down.
 
 To get what we need I used service discovery via [mesos-dns](http://mesosphere.github.io/mesos-dns/) so cassandra nodes can see cassandra seed never mind on which mesos slave they will be. To do it I just used simple bash script
 
-```
+{% highlight shell %}
 SEED=`echo $(dig +short $SEED) | tr ' ' ','`
-```
+{% endhighlight %}
 
 This will extract ip's of cassandra seed from mesos-dns.
 
@@ -66,7 +66,7 @@ This will extract ip's of cassandra seed from mesos-dns.
 
 At first glance I wasn't quite sure how to deploy it but then I sunk my teeth in and figured it all out. [Marathon API](https://mesosphere.github.io/marathon/docs/rest-api.html) and [Cassandra documentation](http://docs.datastax.com/en/cassandra/2.1/cassandra/gettingStartedCassandraIntro.html) was very helpful
 
-```
+{% highlight shell %}
 {
     "id": "/ctrlpkw/db",
     "apps": [
@@ -173,12 +173,12 @@ At first glance I wasn't quite sure how to deploy it but then I sunk my teeth in
         }
     ]
 }
-```
+{% endhighlight %}
 Most important stuff in this cluster config is constraint on mesos to use unique hosts, otherwise it will try to deploy on hosts where ports are already occupied and it will fail.
 
 Cassandra needs ports open for it's own [gossip](https://www.datastax.com/documentation/cassandra/2.1/cassandra/architecture/architectureGossipAbout_c.html) configuration and they must be avaliable on mesos-slave ip. There is no chance right now to reconfigure cassandra.yaml in a way to use different ports for internode communication.
 
-```
+{% highlight json %}
 "ports": [
     7199,
     7000,
@@ -186,24 +186,24 @@ Cassandra needs ports open for it's own [gossip](https://www.datastax.com/docume
     9160,
     9042
 ],
-```
+{% endhighlight %}
 
 This is why additional configuration of docker is needed
 
-```
+{% highlight json %}
 "network": "HOST",
 "privileged": true
-```
+{% endhighlight %}
 
 It allows to bind ports on mesos-slave instead of ip that was given by docker.
 
 Last but not least there is SEED environment which will be given to docker container
 
-```
+{% highlight json %}
 "env": {
     "SEED": "cassandra-seed.db.ctrlpkw.marathon.mesos"
 },
-```
+{% endhighlight %}
 
 If your rename the cluster be sure to change this dns address too, moreover every mesos slave needs to have mesos-dns configured.
 
@@ -211,9 +211,9 @@ If your rename the cluster be sure to change this dns address too, moreover ever
 
 This is the moment that I've been waiting on. We can modify cassandra app configuration on marathon and add additional nodes using scale or instances parameter
 
-```
+{% highlight shell %}
 curl -L -H "Content-Type: application/json" -X PUT -d '{ "instances": 6 }' http://marathon/v2/apps/ctrlpkw/db/cassandra
-```
+{% endhighlight %}
 
 I have tried to use parameter "scaleBy" which is in [marathon API](https://mesosphere.github.io/marathon/docs/rest-api.html). Well, better luck next time.
 
@@ -223,7 +223,7 @@ We are just one step away from deploying our application with cassandra database
 
 And here is json to deploy cluster with cassandra and app on marathon
 
-```
+{% highlight json %}
 {
   "id": "/ctrlpkw",
   "groups": [
@@ -354,13 +354,13 @@ And here is json to deploy cluster with cassandra and app on marathon
   ]
 
 }
-```
+{% endhighlight %}
 
 Let's do it!
 
-```
+{% highlight shell %}
 curl -L -H "Content-Type: application/json" -X POST -d@ctrlpkw_cluster.json http://marathon/v2/groups
-```
+{% endhighlight %}
 
 And here it is
 

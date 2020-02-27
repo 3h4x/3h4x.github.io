@@ -1,8 +1,7 @@
 ---
 layout: post
 title:  "Hello world and Dell Latitude E5440 configuration"
-date:   2015-01-10 18:55:32
-categories: configuration
+categories: tech
 tags: [puppet, vim, bash]
 comments: True
 ---
@@ -10,8 +9,9 @@ comments: True
 
 YAB is on the web. I had hard time picking right technology, what I wanted is blog as simple as it can get.
 At the end of the day Jekyll won over chirp and octopress.
-
-`exit 0`
+{% highlight shell %}
+exit 0
+{% endhighlight %}
 
 Installation of Jessie left me with two problems and right after that I want to restore my default setup.
 <!-- readmore -->
@@ -23,20 +23,25 @@ To the point!
 
     Let's check what we have:
 
-    `lspci`
+    {% highlight shell %} 
+    lspci
 
-    `02:00.0 Network controller: Intel Corporation Wireless 7260 (rev 73)`
+    02:00.0 Network controller: Intel Corporation Wireless 7260 (rev 73)
+    {% endhighlight %}
 
-    To fix it you need drivers that are in non-free packages.
+To fix it you need drivers that are in non-free packages.
 
-    `sudo sed -i.bak 's/main contrib/main contrib non-free/' /etc/apt/sources.list'`
-    `sudo aptitude update && sudo aptitude install firmware-iwlwifi`
+    {% highlight shell %} 
+    sudo sed -i.bak 's/main contrib/main contrib non-free/' /etc/apt/sources.list'
+    sudo aptitude update && sudo aptitude install firmware-iwlwifi
+    {% endhighlight %}
 
 * CPU freaks out after waking up from sleep.
 
     Let's go!
-
-    `sudo aptitude install cpufreqd cpufrequtils`
+    {% highlight shell %} 
+    sudo aptitude install cpufreqd cpufrequtils
+    {% endhighlight %} 
 
 ## Automate all the things!
 I use puppet but I don't want to start flame war.

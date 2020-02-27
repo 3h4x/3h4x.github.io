@@ -5,11 +5,17 @@ layout: default
 
   <header class="post-header">
     <h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
+    {% if page.tags != " " %}
+      {% for tag in page.tags %}
+      <a href="/tags/#{{ tag }}"><code class="highlighter-rouge">{{ tag }}</code></a>
+      {% endfor %}
+    {% endif %}
     <p class="post-meta">
       {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
       <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
         {{ page.date | date: date_format }}
       </time>
+
       {%- if page.modified_date -%}
         ~ 
         {%- assign mdate = page.modified_date | date_to_xmlschema -%}
@@ -30,14 +36,18 @@ layout: default
     {{ content }}
   </div>
 
+  {% if site.related_posts.size >= 1 %}
   <hr>
+  <div>
+    Related posts:
+    <ul>
+    {% for related_post in site.related_posts limit: 5 %}
+      <li><a href="{{ related_post.url }}">{{ related_post.title }}</a></li>
+    {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
 
-  Read more in related tags:
-  <ul>
-  {% for tag in page.tags %}
-      <li><a href="/tags/#{{ tag }}">{{ tag }}</a></li>
-  {% endfor %}
-  </ul>
 
 
   {%- if site.disqus.shortname -%}

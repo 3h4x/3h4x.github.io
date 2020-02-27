@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "SSH tunneling classics"
-date:   2015-01-15 17:17:12
-categories: ssh tricks
+categories: tech
+tags: [tools]
 comments: True
 ---
 ### Far, far away, behind NAT and firewall
@@ -27,13 +27,17 @@ Example:
 We want from remote host connect locally to TCP port :3142.
 That traffic will be routed to apt.cacher.io to port 3142 via your computer.
 
-`ssh $remote_host -R 3142:apt.cacher.io:3142`
+{% highlight shell %}
+ssh $remote_host -R 3142:apt.cacher.io:3142
+{% endhighlight %}
 
 Well if you did that you just logged to the remote server.
 Now you can `netstat -ntlp` and check if you really have 127.0.0.1:3142 listening.
 If so, then just tell apt where is the proxy:
 
-`echo 'Acquire::http::Proxy "http://localhost:3142";' > /etc/apt/apt.conf.d/99proxy`
+{% highlight shell %}
+echo 'Acquire::http::Proxy "http://localhost:3142";' > /etc/apt/apt.conf.d/99proxy
+{% endhighlight %}
 
 This is just an example but you can do same thing for any service out there.
 
@@ -53,7 +57,9 @@ localhost.
 To achieve that we need to create a proxy that will route traffic from our machine to the remote machine DB port.
 To be specific let's use 5432.
 
-`ssh $remote_host -L 5432:localhost:5432`
+{% highlight shell %}
+ssh $remote_host -L 5432:localhost:5432
+{% endhighlight %}
 
 This will open new port on your computer `netstat -ntlp` to check it of course. It's done.
 You can treat remote database as if it were local.
@@ -70,7 +76,9 @@ Example:
 So we got this web service, it's behind a proxy and someone in different city/country/universe says it does not work.
 
 Okay, so let's prove that it really works!
-`ssh $remote_host_in_djibouti -D 14141`
+{% highlight shell %}
+ssh $remote_host_in_djibouti -D 14141
+{% endhighlight %}
 and then configure socks proxy in your favourite browser.
 
 Now every website will be obtained from $remote_host_in_djibouti.

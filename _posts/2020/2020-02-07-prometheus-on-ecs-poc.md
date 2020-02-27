@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Prometheus on ECS - Proof of Concept"
-categories: observability
+categories: tech
 tags: [ecs, prometheus, monitoring, aws, terraform, cloudwatch]
 comments: True
 ---
@@ -85,7 +85,7 @@ To separate `prometheus` from existing infrastructure it has it's own `ASG` and 
 a way to provide resiliency and setup `prometheus` in multiple AZs.
 
 As it was PoC it's not highly adjustible, some things like VPC subnets are actually hardcoded but hey, it's not my fault :)
-```hcl-terraform
+{% highlight terraform %}
 module "prometheus_us_west_2a" {
   source = "git::git@github.com:3h4x/terraform-prometheus-ecs.git//services/prometheus?ref=v0.0.1"
 
@@ -103,7 +103,7 @@ module "prometheus_us_west_2a" {
   vpc_id                                = module.vpc.vpc_id
   vpc_subnets                           = module.vpc.private_subnets
 }
-```
+{% endhighlight %}
 
 There are multiple things that this module abstracts away. Let me iterate over them:
 - IAM permissions for EBS volumes so `grafana` and `prometheus` have persistent data
@@ -120,7 +120,7 @@ There are multiple things that this module abstracts away. Let me iterate over t
 
 Let me explain what's deployed as our `prometheus` task.
 
-```json
+{% highlight json %}
 [
   {
     "image": "prom/prometheus:v2.14.0",
@@ -163,7 +163,7 @@ Let me explain what's deployed as our `prometheus` task.
     "name": "alertmanager"
   }
 ]
-```
+{% endhighlight %}
 [Click to see whole json](https://github.com/3h4x/terraform-prometheus-ecs/blob/master/services/prometheus/files/prometheus_task.json)
 
 As you can see we deploy: 
@@ -176,7 +176,7 @@ If you're familiar with `prometheus` then there is nothing to explain with first
 key component for this setup. It's an application (just few hundreds line of `python` code) that gets information about containers running in ECS and provide it in
 formats that `prometheus` is able to read. 
 Additionally we need to configure `prometheus` so it know about this `sd` configuration with:
-```yaml
+{% highlight yaml %}
   - job_name: 'ecs'
     scrape_interval: 20s
     file_sd_configs:
@@ -188,7 +188,7 @@ Additionally we need to configure `prometheus` so it know about this `sd` config
         action: replace
         target_label: __metrics_path__
         regex: (.+)
-```
+{% endhighlight %}
 If you want to know how the `json` looks like you can either try this setup or refer to docs.
 
 **Note:**
@@ -200,28 +200,28 @@ requirements.
 For every `ECS` cluster that we want to monitor we have to deploy `node-exporter` and `cadvisor`.
 Because `scheduling_strategy` is set to `DAEMON` every node in a cluster will be monitored.
  
-```hcl-terraform
+{% highlight terraform %}
 module "node_exporter" {
   source = "git::git@github.com:3h4x/terraform-prometheus-ecs.git//services/prometheus_node_exporter?ref=v0.0.1"
 
   ecs_cluster_name   = module.ecs_cluster.cluster_name
   ecs_security_group = module.ecs_cluster.security_group_id
 }
-```
+{% endhighlight %}
 
-```hcl-terraform
+{% highlight terraform %}
 module "cadvisor_exporter" {
   source = "git::git@github.com:3h4x/terraform-prometheus-ecs.git//services/prometheus_cadvisor_exporter?ref=v0.0.1"
 
   ecs_cluster_name   = module.ecs_cluster.cluster_name
   ecs_security_group = module.ecs_cluster.security_group_id
 }
-```
+{% endhighlight %}
 
 ### Enable scraping container metrics
 Additionally we need to configure `node-exporter`, `cadvisor` and any other application task variables so `ecs-discovery` 
 will know that we want to scrape it with `prometheus`.
-```json
+{% highlight json %}
     "environment": [
       {
         "name": "PROMETHEUS",
@@ -232,7 +232,7 @@ will know that we want to scrape it with `prometheus`.
         "value": "${port}"
       }
     ]
-```
+{% endhighlight %}
 `PROMETHEUS_PORT` must be the same as port on which containers expose `prometheus` metrics.
 
 ## Recap

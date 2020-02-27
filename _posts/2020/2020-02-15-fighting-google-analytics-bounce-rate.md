@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Fighting Google Analytics bounce rate"
-categories: jekyll
+categories: tech
 tags: [jekyll, google-analytics, liquid]
 comments: True
 ---
@@ -64,6 +64,11 @@ There are also some considerations for event tracking that one should be aware o
 > **It's important to keep in mind that any implementation of Event measurement that automatically executes on page load will result in a zero bounce rate for the page.**
 
 [Read more docs about event tracking](https://support.google.com/analytics/answer/1033068?hl=en#Implementation)
+
+### Update 27 II 2020
+
+I found this plugin [jekyll-tagging-related_posts](https://github.com/toshimaru/jekyll-tagging-related_posts). I think 
+it's better to use it below article. Tags are displayed under the title of post.
 
 ## Conclusion
 

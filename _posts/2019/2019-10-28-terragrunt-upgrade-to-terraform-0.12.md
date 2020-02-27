@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Terragrunt upgrade to terraform 0.12"
-categories: terraform
+categories: tech
 tags: [terraform, terragrunt, infrastructure as code]
 comments: True
 ---
@@ -36,31 +36,61 @@ That's why I have focused on automatization of this task as amount of manual wor
 
 First I've create helper commands migrating envs in infra-live to `terragrunt19`:  
 - renaming `terraform.tfvars` to `terragrunt.hcl`:  
-    `find . -name 'terraform.tfvars' | xargs rename 's/terraform.tfvars/terragrunt.hcl/' -v`
+{% highlight shell %}
+find . -name 'terraform.tfvars' | 
+xargs rename 's/terraform.tfvars/terragrunt.hcl/' -v
+{% endhighlight %}
 - adjusting file format:  
-    `find . -name 'terragrunt.hcl' -exec sed -i.bak -e '/terragrunt =/d' -e 's/^}$/inputs = {/' -e '$s#$#}#' -e 's/include =/include/' -e 's/dependencies =/dependencies/' {} \;`
+{% highlight shell %}
+find . -name 'terragrunt.hcl' -exec sed -i.bak \
+-e '/terragrunt =/d' -e 's/^}$/inputs = {/' -e '$s#$#}#' 
+-e 's/include =/include/' -e 's/dependencies =/dependencies/' {} \;
+{% endhighlight %}
 - validating hcl:   
-    `terragrunt hclfmt`
+{% highlight shell %}
+terragrunt hclfmt
+{% endhighlight %}
 - repeat validating hcl until all is good
 - rename `env.tfvars`:  
-    `find . -name 'env.tfvars' | xargs rename 's/env.tfvars/env.yaml/' -v`
+{% highlight shell %}
+find . -name 'env.tfvars' | xargs rename 's/env.tfvars/env.yaml/' -v
+{% endhighlight %}
 - yaml it:  
-    `find . -name 'env.yaml' -exec sed -i.bak -e 's/ =/:/' {} \;`
+{% highlight shell %}
+find . -name 'env.yaml' -exec sed -i.bak -e 's/ =/:/' {} \;
+{% endhighlight %}
 - rename `region.tfvars`:  
-    `find . -name 'region.tfvars' | xargs rename 's/region.tfvars/region.yaml/' -v`
+{% highlight shell %}
+find . -name 'region.tfvars' | xargs rename 's/region.tfvars/region.yaml/' -v
+{% endhighlight %}
 - yaml it:  
-    `find . -name 'region.yaml' -exec sed -i.bak -e 's/ =/:/' {} \;`
+{% highlight shell %}
+find . -name 'region.yaml' -exec sed -i.bak -e 's/ =/:/' {} \;
+{% endhighlight %}
 - clean temp files:  
-    `git clean -e '*.hcl' -e '*.yaml' -f`
+{% highlight shell %}
+git clean -e '*.hcl' -e '*.yaml' -f
+{% endhighlight %}
     
 ### Infrastructure modules
 
 - find modules to upgrade and do the upgrade: 
-    `for dir in $(find . -type d | grep -v -e '.git\|.terraform\|^.$'); do echo $dir; cd $dir; if [ -f main.tf ]; then sed -i.bak -e 's/0.11.7/0.12.10/g' main.tf; terraform init --backend=false; terraform 0.12upgrade  --yes; fi; cd $REPO_BASE; done`
+{% highlight shell %}
+for dir in $(find . -type d | grep -v -e '.git\|.terraform\|^.$'); do 
+    echo $dir; cd $dir; 
+    if [ -f main.tf ]; then 
+        sed -i.bak -e 's/0.11.7/0.12.10/g' main.tf; 
+        terraform init --backend=false; terraform 0.12upgrade  --yes; 
+    fi; 
+    cd $REPO_BASE; 
+done
+{% endhighlight %}
 - clean temp files: 
-    `git clean -fd`
+{% highlight shell %}
+git clean -fd
+{% endhighlight %}
     
-Finding and updating modules is stupid and in case of any errors you should investigate yourself.  
+Finding and updating modules is toil. In case of any errors you should investigate yourself.  
 
 ### Upgrading modules
 

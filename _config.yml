@@ -16,6 +16,13 @@ author:
 # Build settings
 markdown: kramdown
 
+kramdown:
+  input: GFM
+  auto_ids: true
+  syntax_highlighter: rouge
+
+highlighter: rouge
+
 pages_list:
   Archive: '/archive'
   Tags: '/tags'
@@ -31,6 +38,8 @@ plugins:
   - jekyll-seo-tag
   - jekyll-feed
   - jemoji
+  - jekyll-tagging-related_posts
+
 minima:
   social_links:
     github: 3h4x
@@ -38,4 +47,3 @@ minima:
 
   disqus:
     shortname: 3h4xgithubio
-
