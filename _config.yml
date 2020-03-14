@@ -35,10 +35,11 @@ show_excerpts: true
 excerpt_separator: <!-- readmore -->
 
 plugins:
-  - jekyll-seo-tag
   - jekyll-feed
-  - jemoji
+  - jekyll-seo-tag
+  - jekyll-sitemap
   - jekyll-tagging-related_posts
+  - jemoji
 
 minima:
   social_links:
@@ -47,3 +48,6 @@ minima:
 
   disqus:
     shortname: 3h4xgithubio
+
+feed:
+  excerpt_only: true
