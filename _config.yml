@@ -34,6 +34,8 @@ show_excerpts: true
 
 excerpt_separator: <!-- readmore -->
 
+permalink: /:categories/:year/:month/:day/:title
+
 plugins:
   - jekyll-feed
   - jekyll-seo-tag

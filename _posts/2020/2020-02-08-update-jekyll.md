@@ -6,7 +6,7 @@ tags: [jekyll, liquid, github-pages]
 comments: True
 ---
 
-Recently I've written a [post about updating my blog](https://3h4x.github.io/jekyll/2019/08/26/blog-update.html).
+Recently I've written a [post about updating my blog](https://3h4x.github.io/tech/2019/08/26/blog-update.html).
 As I have a lot of ideas for new posts, it's natural that I wanted to be sure `jekyll` is correct technology for me.
 I did some checkups and yeah! `jekyll` is the best technology for me right now.   
 Github support, development, `git push` to deploy changes without any additional configuration or component is making it 

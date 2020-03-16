@@ -5,19 +5,19 @@ categories: tech
 tags: [dns, gcp, python]
 comments: True
 ---
-Picking up DNS provider should be, in my opinion, based on current cloud environment used. 
-You use AWS then `Route53`, GCP then `Cloud Dns`, etc. It's easier to manage and audit then. 
-Not the case for multicloud usage but most of the companies I worked for used single cloud.
+Decision to pick DNS provider should be, in my opinion, based on currently used cloud environment. 
+If you use AWS then `Route53`, GCP then `Cloud Dns`, etc. It's easier to manage it and audit then. 
+Not the case for multicloud usage but most of the companies I worked for were using single cloud.
 
-Sometimes DNS domain was bought before cloud adoption and DNS has to be migrated. It's not uncommon and in this blog 
-post I will write about changing `NS` records from `godaddy` to google `Cloud Dns`.
+If DNS domain was registered before cloud adoption then your task might be to migrate DNS. Such migration is not 
+uncommon and in this blog post I will write about changing `NS` records from `godaddy` to google `Cloud Dns`.
 
 <!-- readmore -->
 
 ## DNS NS records
 
 NS record delegates a DNS zone to use the given authoritative name servers. It usually have long TTL as changing it is 
-not frequent and it helps preventing frequent queries from clients.  
+not frequent and it's preventing frequent queries from clients.  
 [More information in related RFC](https://tools.ietf.org/html/rfc1035#page-12)
 
 You can check your current NS servers with `dig` command:
@@ -63,15 +63,16 @@ resource "google_dns_record_set" "a_cheesburger" {
 }
 {% endhighlight %}
 - Unfortunately it's not possible to change TTL of NS record in `goddady`
-- To check if records have replicated correctly and to avoid any human error I made a `python` script checking
+- To check if records have propagated correctly and to avoid any human error I made a `python` script checking
 if DNS records are matching for different resolvers.
 
-To use it there are external requirements to install:
+To be able to use it you need to install additional `python` libraries:
 {% highlight shell %}
 pip install dnspython
 pip install click
 {% endhighlight %}
     
+Here is a script:  
 {% highlight python %}
 #!/usr/bin/env python3
 import socket
@@ -146,13 +147,13 @@ gcloud dns managed-zones describe prod --project prod-270011 --format json | jq 
 {% highlight yaml %}
 watch dig +short NS cheezburger.com
 {% endhighlight %}  
-Worst case scenario it will take longer than TTL set on current NS records. Be prepared for that. 
+Worst case scenario: it will take longer than TTL set on current NS records. Be prepared for that. 
 - Enjoy DNS in GCP!  
 
 ## Thoughts
 
 Migrating DNS is not rocket science but needs to be executed with caution, especially for already used domains that 
-are used for production traffic.  
+are serving production traffic.  
 Migrating DNSSEC is more complicated but is also out of the scope of this post.
 
 I hope someone will find my execution plan and `python` snippet useful.
