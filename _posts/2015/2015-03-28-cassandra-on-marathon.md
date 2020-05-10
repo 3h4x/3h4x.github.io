@@ -5,7 +5,7 @@ categories: tech
 tags: [cassandra, marathon, docker, mesos]
 comments: True
 ---
-Recently all I talk about is [mesos](http://mesos.apache.org/) and mesos on mesos ;)
+Recently all I talk about is [mesos](https://mesos.apache.org/) and mesos on mesos ;)
 
 > Apache Mesos abstracts CPU, memory, storage, and other compute
 > resources away from machines (physical or virtual), enabling
@@ -37,7 +37,7 @@ docker-compose i gave it a big go and installed it
 *TouK* is developing an application [ctrl-pkw](https://github.com/TouK/ctrl-pkw) to collect protocols from poll stations and check if election results were not tampered.
 
 So beside my plan to move most of the virtual machines from KVM to
-mesos I got a task to create [cassandra](http://cassandra.apache.org/) cluster which will be easily scalable. Let's get to it!
+mesos I got a task to create [cassandra](https://cassandra.apache.org/) cluster which will be easily scalable. Let's get to it!
 
 ## Cassandra on docker
 
