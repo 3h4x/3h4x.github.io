@@ -17,9 +17,9 @@ locally, transferring it out of router itself into another location is great way
 To be able to use backup script you should have ssh key pair as ssh is used as secure protocol to connect
 to router. 
 Upload your public key to Mikrotik via `Files` menu and execute:
-```bash
+{% highlight bash %}
 /user ssh-keys import user=admin public-key-file=id_rsa.pub
-```
+{% endhighlight %}
 
 **Note:** To generate new ssh key pair you can use `ssh-keygen`.   
 
@@ -35,7 +35,7 @@ This script will:
 - download backup with sftp
 - remove backup from router and log end of script execution
 
-```bash
+{% highlight bash %}
 #!/bin/bash -e
 USER=admin
 SERVER=$1
@@ -52,12 +52,12 @@ mv $NAME $DIR/$SERVER-$NAME
 sleep 3;
 ssh $URI "file remove \"$NAME\""
 ssh $URI 'log info message="Backup to storage completed"'
-```
+{% endhighlight %}
 
 $1 is variable which is passed as arguemnt to script. Ex:
-```bash
+{% highlight bash %}
 /backup.sh 192.168.88.1
-```
+{% endhighlight %}
 If you have more than one device then it's easy to backup all of them.
 
 3h4x
