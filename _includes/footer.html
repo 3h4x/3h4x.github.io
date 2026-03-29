@@ -9,3 +9,8 @@
   </div>
 
 </footer>
+<script>
+  document.querySelectorAll('img:not([loading])').forEach(function(img) {
+    img.setAttribute('loading', 'lazy');
+  });
+</script>

@@ -7,6 +7,7 @@ description: >
   as code, cloud like AWS/GCP and any other technology I use.
 baseurl: ""
 url: "https://3h4x.github.io"
+image: /assets/og-default.png
 github_username: 3h4x
 
 author:

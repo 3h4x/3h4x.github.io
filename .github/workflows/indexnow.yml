@@ -1,0 +1,24 @@
+name: IndexNow
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '_posts/**'
+      - '*.md'
+      - '*.html'
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping IndexNow
+        run: |
+          curl -s -X POST "https://api.indexnow.org/indexnow" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "host": "3h4x.github.io",
+              "key": "${{ secrets.INDEXNOW_KEY }}",
+              "keyLocation": "https://3h4x.github.io/${{ secrets.INDEXNOW_KEY }}.txt",
+              "urlList": ["https://3h4x.github.io/"]
+            }'
