@@ -1,6 +1,9 @@
 ---
 layout: default
 ---
+{%- assign words = content | number_of_words -%}
+{%- assign mins = words | divided_by: 200 -%}
+{%- if mins < 1 %}{% assign mins = 1 %}{% endif -%}
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
@@ -15,16 +18,16 @@ layout: default
       <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
         {{ page.date | date: date_format }}
       </time>
-
       {%- if page.modified_date -%}
-        ~ 
+        &nbsp;&rarr;&nbsp;
         {%- assign mdate = page.modified_date | date_to_xmlschema -%}
         <time class="dt-modified" datetime="{{ mdate }}" itemprop="dateModified">
           {{ mdate | date: date_format }}
         </time>
       {%- endif -%}
+      &nbsp;&middot;&nbsp;{{ mins }} min read
       {%- if page.author -%}
-        • {% for author in page.author %}
+        &nbsp;&middot;&nbsp;{% for author in page.author %}
           <span itemprop="author" itemscope itemtype="http://schema.org/Person">
             <span class="p-author h-card" itemprop="name">{{ author }}</span></span>
             {%- if forloop.last == false %}, {% endif -%}
@@ -36,28 +39,34 @@ layout: default
     {{ content }}
   </div>
 
-  {% if site.related_posts.size >= 1 %}
-  <hr>
-  <div>
-    Related posts:
-    <ul>
-    {% for related_post in site.related_posts limit: 5 %}
-      <li><a href="{{ related_post.url }}">{{ related_post.title }}</a></li>
-    {% endfor %}
+  <div class="related-posts">
+    <h2>Related posts</h2>
+    <ul class="post-list">
+      {%- for rpost in site.related_posts limit: 3 -%}
+        {%- unless rpost.url == page.url -%}
+        <li>
+          <span class="post-meta">{{ rpost.date | date: date_format }}</span>
+          <h3><a class="post-link" href="{{ rpost.url | relative_url }}">{{ rpost.title | escape }}</a></h3>
+        </li>
+        {%- endunless -%}
+      {%- endfor -%}
     </ul>
   </div>
-  {% endif %}
 
-
-  <!—- ShareThis BEGIN -—>
-  <script async src="https://platform-api.sharethis.com/js/sharethis.js#property=5e6f2046b4dda60012f1f523&product=sticky-share-buttons"></script>
-  <!—- ShareThis END -—>
-
-
-  {%- if site.disqus.shortname -%}
-    {%- include disqus_comments.html -%}
-  {%- endif -%}
+  <nav class="post-nav" aria-label="Post navigation">
+    <div class="post-nav-item post-nav-prev">
+      {%- if page.previous.url -%}
+        <span class="post-nav-label">&larr; Previous</span>
+        <a href="{{ page.previous.url | relative_url }}">{{ page.previous.title | escape }}</a>
+      {%- endif -%}
+    </div>
+    <div class="post-nav-item post-nav-next">
+      {%- if page.next.url -%}
+        <span class="post-nav-label">Next &rarr;</span>
+        <a href="{{ page.next.url | relative_url }}">{{ page.next.title | escape }}</a>
+      {%- endif -%}
+    </div>
+  </nav>
 
   <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
 </article>
-

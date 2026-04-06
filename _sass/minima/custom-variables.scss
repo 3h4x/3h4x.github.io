@@ -1,1 +1,19 @@
-// Placeholder to allow overriding predefined variables smoothly.
+// Override minima defaults with CSS custom properties
+// These get set by [data-theme] in custom-styles.scss
+
+$brand-color:           #828282;
+$brand-color-light:     #d4d4d4;
+$brand-color-dark:      #424242;
+
+$text-color:            #111;
+$background-color:      #fdfdfd;
+$code-background-color: #1e1e2e;
+
+$link-base-color:       #2a7ae2;
+$link-visited-color:    #1756a9;
+
+$table-text-color:      #333;
+$table-zebra-color:     #f6f6f6;
+$table-header-bg-color: #f0f0f0;
+$table-header-border:   #c8c8c8;
+$table-border-color:    $brand-color-light;

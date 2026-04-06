@@ -24,6 +24,10 @@
             <a class="page-link" href="{{ my_page.url | relative_url }}">{{ my_page.title | escape }}</a>
             {%- endif -%}
           {%- endfor -%}
+          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light theme">
+            <span class="theme-icon-light">&#9789;</span>
+            <span class="theme-icon-dark">&#9788;</span>
+          </button>
         </div>
       </nav>
     {%- endif -%}

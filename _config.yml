@@ -2,11 +2,11 @@
 title: 3h4x.github.io
 email: 3h4x.github.io@gmail.com
 description: >
-  YAB - yet another blog on the internet!
-  Container orchestration, observability tools, continuous intergration/delivery/deployment, terraform infrastructure
-  as code, cloud like AWS/GCP and any other technology I use.
+  YAB - yet another blog. Infrastructure, security, crypto, tooling,
+  and whatever else I'm building or breaking.
 baseurl: ""
 url: "https://3h4x.github.io"
+image: /assets/og-default.png
 github_username: 3h4x
 
 author:
@@ -29,6 +29,10 @@ pages_list:
 
 google_analytics: 'UA-58462461-1'
 
+port: 4001
+livereload: true
+paginate: 10
+paginate_path: "/page/:num/"
 theme: minima
 show_excerpts: true
 
@@ -42,6 +46,7 @@ plugins:
   - jekyll-sitemap
   - jekyll-tagging-related_posts
   - jemoji
+  - jekyll-paginate
 
 minima:
   social_links:
