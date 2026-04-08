@@ -6,7 +6,7 @@ tags: [mcp, claude, devtools, monitoring]
 comments: True
 ---
 
-I run a bunch of services on a single server. Prometheus for metrics, Loki for logs, PM2 for process management. Checking on them usually meant opening terminals and curling endpoints. I wanted Claude to be able to do that for me — but writing a custom MCP server for every API felt like too much work. So I built `mcp-http-tools`: a generic MCP server where you define tools in YAML and it proxies requests to any HTTP API.
+I've been using Grafana since around 2014 and added Prometheus and Loki to the stack not long after. Dashboards and alerts are great for knowing *what* happened — but when I want to actually poke at the data, it's still `curl` commands in a terminal. I wanted Claude to be able to query my monitoring stack directly — but writing a custom MCP server for every API felt like too much work. So I built `mcp-http-tools`: a generic MCP server where you define tools in YAML and it proxies requests to any HTTP API.
 
 <!-- readmore -->
 
