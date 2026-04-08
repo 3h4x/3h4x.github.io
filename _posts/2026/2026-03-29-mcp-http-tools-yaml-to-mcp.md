@@ -213,25 +213,20 @@ cp config.yaml ~/.config/mcp-http-tools/config.yaml
 # edit it to point at your APIs
 ```
 
-Then wire it up to Claude Desktop via [supergateway](https://www.npmjs.com/package/supergateway) for SSE transport:
-
-```bash
-npx -y supergateway --stdio "node /path/to/mcp-http-tools/index.js" --port 9191
-```
-
-And in `~/Library/Application Support/Claude/claude_desktop_config.json`:
+Then wire it up to Claude Desktop. It runs as a stdio MCP server — no extra proxy, no port binding. Just add it to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
 ```json
 {
   "mcpServers": {
     "mcp-http-tools": {
-      "url": "http://localhost:9191/sse"
+      "command": "node",
+      "args": ["/path/to/mcp-http-tools/index.js"]
     }
   }
 }
 ```
 
-If you're using Claude Code instead of Desktop, you can skip `supergateway` and add the server directly as a stdio MCP:
+Same thing for Claude Code — add it to `.claude/settings.json` or your global settings:
 
 ```json
 {
@@ -261,7 +256,5 @@ After that:
 The whole thing is ~200 lines of actual logic. If you've got HTTP APIs you want to talk to from Claude, this is probably the fastest path there.
 
 Check it out: [github.com/3h4x/mcp-http-tools](https://github.com/3h4x/mcp-http-tools)
-
-Know what you are doing and have fun!
 
 3h4x

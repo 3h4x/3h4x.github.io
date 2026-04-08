@@ -56,8 +56,8 @@
   // Code
   --code-inline-bg: #2d333b;
   --code-inline-color: #f38ba8;
-  --code-block-bg: #13141c;
-  --code-block-text: #cdd6f4;
+  --code-block-bg: #24273a;
+  --code-block-text: #cad3f5;
 
   // Tables
   --table-header-bg: #21222c;
@@ -721,4 +721,59 @@ blockquote {
   a {
     font-weight: 500;
   }
+}
+
+
+// ---------------------------------------------------------------------------
+// About page — repo cards
+// ---------------------------------------------------------------------------
+
+.pinned-repos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1em;
+  margin: 1.5em 0;
+}
+
+.repo-card {
+  display: block;
+  padding: 1em 1.25em;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    border-color: var(--link-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: var(--text-color);
+  }
+
+  &:visited {
+    color: var(--text-color);
+  }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.4em;
+    color: var(--link-color);
+  }
+
+  p {
+    font-size: 0.85em;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 0.75em;
+  }
+}
+
+.repo-lang {
+  font-size: 0.75em;
+  color: var(--text-muted);
+  background: var(--toggle-bg);
+  padding: 2px 8px;
+  border-radius: 10px;
 }
