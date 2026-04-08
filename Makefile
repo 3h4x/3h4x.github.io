@@ -1,12 +1,12 @@
-export PATH := /opt/homebrew/opt/ruby/bin:$(PATH)
+BUNDLE := /opt/homebrew/opt/ruby/bin/bundle
 
 .PHONY: serve build install
 
 serve:
-	bundle exec jekyll serve
+	$(BUNDLE) exec jekyll serve --livereload
 
 build:
-	JEKYLL_ENV=production bundle exec jekyll build
+	JEKYLL_ENV=production $(BUNDLE) exec jekyll build
 
 install:
-	bundle install
+	$(BUNDLE) install

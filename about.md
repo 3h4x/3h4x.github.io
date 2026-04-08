@@ -4,11 +4,13 @@ title: About
 permalink: /about/
 ---
 
-<div class="about-page">
+<div class="about-page" markdown="1">
 
 ## Hey
 
-I'm **3h4x** — infrastructure engineer, builder, tinkerer. I work with Kubernetes, Terraform, and cloud infrastructure during the day, and build side projects with Solidity, TypeScript, and whatever else catches my attention at night.
+I'm **3h4x** — infrastructure engineer, builder, tinkerer. Been doing this for over 15 years, starting as a sysadmin, moving through DevOps into architecture and backend development. AWS is my home turf, Terraform and Kubernetes are my daily tools, and I write backend services in Python and TypeScript when the situation calls for it.
+
+These days I'm deep into AI tooling and the agentic space — Claude Code as a daily driver, building agentic workflows, and following emerging protocols like MCP and x402. At night I deploy smart contracts on Ethereum L2s and build whatever catches my attention.
 
 This blog is where I write about things I've learned, broken, or built. No fluff, no sponsored content. Just technical posts about tools and problems I actually deal with.
 
@@ -39,9 +41,9 @@ This blog is where I write about things I've learned, broken, or built. No fluff
     <span class="repo-lang">HCL</span>
   </a>
 
-  <a href="https://github.com/3h4x/movies-organizer" class="repo-card">
-    <h3>movies-organizer</h3>
-    <p>Organising and bulk renaming media library with Python and IMDb.</p>
+  <a href="https://github.com/3h4x/filmpick" class="repo-card">
+    <h3>filmpick</h3>
+    <p>Local movie recommendation engine. Next.js + Python + SQLite + TMDb.</p>
     <span class="repo-lang">TypeScript</span>
   </a>
 
@@ -51,10 +53,5 @@ This blog is where I write about things I've learned, broken, or built. No fluff
     <span class="repo-lang">SCSS</span>
   </a>
 </div>
-
-## Find me
-
-- [GitHub](https://github.com/3h4x)
-- [RSS Feed](/feed.xml)
 
 </div>

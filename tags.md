@@ -8,8 +8,16 @@ robots: noindex
 
 <div class="tag-cloud">
   {%- assign sorted_tags = site.tags | sort -%}
+  {%- assign max_count = 0 -%}
   {%- for tag in sorted_tags -%}
+    {%- if tag[1].size > max_count -%}{%- assign max_count = tag[1].size -%}{%- endif -%}
+  {%- endfor -%}
+  {%- for count in (1..max_count) reversed -%}
+    {%- for tag in sorted_tags -%}
+      {%- if tag[1].size == count -%}
     <button class="tag-pill" data-tag="{{ tag[0] }}" onclick="toggleTag(this)">{{ tag[0] }} <span class="tag-count">{{ tag[1].size }}</span></button>
+      {%- endif -%}
+    {%- endfor -%}
   {%- endfor -%}
 </div>
 
