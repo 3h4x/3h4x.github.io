@@ -7,3 +7,4 @@ _site
 _posts/.DS_Store
 .playwright*
 *.png
+!assets/*.png
