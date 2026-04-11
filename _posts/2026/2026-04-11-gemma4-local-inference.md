@@ -55,9 +55,17 @@ The bug: `max(counts)` returns the largest key, not the most frequent item. The 
 
 ### Instruction following *(the interesting one)*
 
-*List exactly 3 benefits of exercise. Numbered list (1. 2. 3.), each item exactly 4 words, no punctuation of any kind, no introductory sentence.*
+*List exactly 3 benefits of exercising. Numbered list (1. 2. 3.), each item exactly 4 words, no punctuation of any kind, no introductory sentence.*
 
-The prompt has a built-in conflict: a numbered list implies periods after numbers, but "no punctuation of any kind" forbids them. How each model handles the contradiction is what matters.
+The prompt has five rules:
+1. Topic: benefits of exercising
+2. Exactly 3 items
+3. Numbered list format: `1. 2. 3.`
+4. Each item exactly 4 words — not 3, not 5
+5. No punctuation of any kind — no periods, commas, or colons
+6. No introductory sentence — start the list immediately
+
+Rules 3 and 5 conflict directly. A numbered list requires periods after each number (`1.`) — but "no punctuation of any kind" forbids them. The model has to pick which rule wins. How each model handles that contradiction is what matters.
 
 **Gemma:** Dropped the periods, kept the word count exactly right on all three items. Made a decision and followed it.
 
