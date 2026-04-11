@@ -122,7 +122,7 @@ What works:
 
 Everything above assumes a capable frontier model. But a lot of people experimenting with agentic infrastructure workflows aren't using frontier models — they're running local open-source models to avoid cost, latency, or data privacy concerns. That's a legitimate choice. It's also where I've seen the worst failures.
 
-Before settling on Claude as my daily driver, I ran agentic workflows with two other setups: [Nous Hermes](https://huggingface.co/NousResearch) (a fine-tuned Gemma4 variant, run locally) and [OpenClaw](https://openclaw.ai) — an early-stage agentic coding tool that predated what became clawdbot.
+Before settling on Claude as my daily driver, I ran agentic workflows with two other setups: [Nous Hermes](https://hermes-agent.nousresearch.com) (a fine-tuned Gemma4 variant, run locally) and [OpenClaw](https://openclaw.ai) — an early-stage agentic coding tool that predated what became clawdbot.
 
 Both were genuinely dangerous in agentic workflows. Not dangerous in the "it's too powerful" sense. Dangerous in the "it will confidently do the wrong thing and you won't know" sense.
 
