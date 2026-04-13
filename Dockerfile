@@ -1,5 +1,10 @@
-FROM jekyll/jekyll:4.0
+FROM ruby:3.3-alpine
 
-RUN gem install jekyll-seo jekyll-feed github-pages minima jemoji jekyll-tagging-related_posts rouge
+RUN apk add --no-cache build-base git
 
-CMD jekyll serve --drafts --trace
+WORKDIR /srv/jekyll
+
+COPY Gemfile Gemfile.lock ./
+RUN bundle install
+
+CMD bundle exec jekyll serve --drafts --trace --host 0.0.0.0

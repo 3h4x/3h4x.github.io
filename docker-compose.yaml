@@ -4,7 +4,7 @@ services:
   jelyll:
     build: .
     ports:
-      - "4000:4000"
+      - "4444:4001"
     networks:
       - overlay
     volumes:
