@@ -7,4 +7,6 @@ WORKDIR /srv/jekyll
 COPY Gemfile Gemfile.lock ./
 RUN bundle install
 
-CMD bundle exec jekyll serve --drafts --trace --host 0.0.0.0
+EXPOSE 4001 35729
+
+CMD ["bundle", "exec", "jekyll", "serve", "--host", "0.0.0.0", "--livereload", "--livereload-ignore", ".playwright-mcp/*", "--force_polling"]

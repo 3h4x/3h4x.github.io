@@ -98,6 +98,7 @@ Two things I've learned the hard way:
 
 **First, not all errors are equal.** A `503` from a circuit breaker doing its job is different from a `500` because your database connection pool is exhausted. I categorize errors by whether they're expected (rate limiting, circuit breaking, validation failures) or unexpected (unhandled exceptions, timeouts, OOMs). Only the unexpected ones should page someone at 3am.
 
+{% raw %}
 ```yaml
 # Alert only on unexpected errors
 - alert: HighUnexpectedErrorRate
@@ -112,6 +113,7 @@ Two things I've learned the hard way:
   annotations:
     summary: "{{ $labels.service }} unexpected error rate above 1%"
 ```
+{% endraw %}
 
 **Second, the errors you don't count are worse than the ones you do.** Timeouts that never return a status code, requests that get dropped at the load balancer, connections refused before they reach your application — none of these show up in your HTTP error metrics. You need infrastructure-level error tracking alongside application-level. ELB 5xx metrics, TCP connection errors, DNS failures. If you only look at what your app reports, you're looking at survivors.
 

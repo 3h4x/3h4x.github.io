@@ -129,6 +129,7 @@ Grafana can alert directly from panels, but I prefer defining alerts in Promethe
 
 `/etc/prometheus/rules.yml`:
 
+{% raw %}
 ```yaml
 groups:
   - name: node_alerts
@@ -161,6 +162,7 @@ groups:
         annotations:
           summary: "Service {{ $labels.job }} is down on {{ $labels.instance }}"
 ```
+{% endraw %}
 
 The `for: 5m` condition means the alert only fires if the condition holds for 5 minutes continuously. This kills most false positives from brief spikes. `up == 0` is a built-in metric Prometheus sets to 0 whenever it fails to scrape a target — dead simple service monitoring.
 
@@ -177,6 +179,7 @@ Prometheus fires alerts; Alertmanager routes them. You can skip Alertmanager and
 
 A minimal Alertmanager config that sends to Telegram:
 
+{% raw %}
 ```yaml
 global:
   resolve_timeout: 5m
@@ -191,6 +194,7 @@ receivers:
         chat_id: YOUR_CHAT_ID
         message: '{{ range .Alerts }}{{ .Annotations.summary }}{{ end }}'
 ```
+{% endraw %}
 
 Telegram is my preferred alert destination for personal projects. It's free, the API is simple, and a bot token takes 2 minutes to set up. PagerDuty is overkill for a single VPS; email is too easy to ignore at 3am.
 

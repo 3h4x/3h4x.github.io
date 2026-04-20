@@ -52,6 +52,7 @@ First thing I automate: creating the deploy user and locking down root access.
 
 ```yaml
 # playbooks/users.yml
+{% raw %}
 - name: User management
   hosts: myserver
   tasks:
@@ -91,6 +92,7 @@ First thing I automate: creating the deploy user and locking down root access.
         name: sshd
         state: restarted
 ```
+{% endraw %}
 
 Run this once and your SSH config is locked down. Run it again — nothing changes because the user already exists, the key is already there, the sshd config already has those values. Idempotent by design.
 
@@ -100,6 +102,7 @@ The `notify: restart sshd` + handlers pattern is clever: the restart only happen
 
 Managing nginx with Ansible means your config lives in version control. No more "which server has that custom nginx block I added by hand six months ago."
 
+{% raw %}
 ```yaml
 # playbooks/nginx.yml
 - name: Nginx setup
@@ -150,9 +153,11 @@ Managing nginx with Ansible means your config lives in version control. No more 
         name: nginx
         state: reloaded
 ```
+{% endraw %}
 
 Templates use Jinja2 so you can inject variables — domain names, backend ports, whatever varies per environment. The template for a reverse proxy config:
 
+{% raw %}
 ```nginx
 # templates/sites/myapp.example.com.j2
 server {
@@ -166,6 +171,7 @@ server {
     }
 }
 ```
+{% endraw %}
 
 Variables come from `group_vars/all.yml`. Consistent, version-controlled, reviewable.
 

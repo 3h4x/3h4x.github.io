@@ -16,6 +16,18 @@ author:
 # Build settings
 markdown: kramdown
 
+sass:
+  quiet_deps: true
+  silence_deprecations:
+    - import
+    - global-builtin
+    - color-functions
+
+exclude:
+  - .playwright-mcp
+  - node_modules
+  - vendor
+
 kramdown:
   input: GFM
   auto_ids: true
