@@ -71,6 +71,8 @@ Rules 3 and 5 conflict directly. A numbered list requires periods after each num
 
 **Nemotron:** Blank output — even with 500 tokens available. Its internal reasoning shows a loop it never escaped: *"no punctuation of any kind... But the rule 'Numbered list (1. 2. 3.)' suggests periods..."* Paralysis, not a resource issue.
 
+> **Correction (April 29):** It was a resource issue. Re-running this prompt at `max_tokens=4000` on the same 4B Nano produces a correct answer in 579 reasoning tokens (~19s). 500 tokens wasn't enough headroom for reasoning mode to escape the internal contradiction. Details in the [Nemotron 3 Nano Omni follow-up]({% post_url 2026/2026-04-29-nemotron-3-nano-omni %}).
+
 **Ministral:** Kept the periods, got the word count wrong on two items. Made a decision, missed a constraint.
 
 For production use this matters more than any accuracy benchmark. In an automated pipeline, Nemotron returning blank with no error is the worst possible failure — the caller gets nothing and no signal why. This is the test that tells you something the leaderboards don't.
