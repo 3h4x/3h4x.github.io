@@ -9,4 +9,4 @@ RUN bundle install
 
 EXPOSE 4001 35729
 
-CMD ["bundle", "exec", "jekyll", "serve", "--host", "0.0.0.0", "--livereload", "--livereload-ignore", ".playwright-mcp/*", "--force_polling"]
+CMD ["bundle", "exec", "jekyll", "serve", "--host", "0.0.0.0", "--watch", "--force_polling"]
