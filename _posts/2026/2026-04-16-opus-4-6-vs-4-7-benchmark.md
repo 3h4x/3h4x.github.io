@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Opus 4.6 vs 4.7: I ran my own benchmark through the Claude CLI"
+title: "Opus 4.6 vs 4.7: both scored 30/30 — both are good?"
 categories: tech
 tags: [ai, anthropic, claude, benchmarks, claude-code, opus, llm]
 comments: True

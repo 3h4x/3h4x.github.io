@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Gemma 4: testing the hype locally"
+title: "Gemma 4 tested locally: the E4B is solid — but it's not what the hype is about"
 categories: tech
 tags: [ai, llm, gemma, google, local-inference, lm-studio, open-source, benchmark]
 comments: True

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Claude Fable 5: I ran the harder benchmark I promised, against Opus 4.8"
+title: "Claude Fable 5 went 30/30 on a benchmark built to break it. Opus 4.8 didn't."
 categories: tech
 tags: [ai, anthropic, claude, fable, benchmarks, claude-code, opus, llm]
 comments: True

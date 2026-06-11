@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Building with viem instead of ethers.js — the migration"
+title: "Migrating from ethers.js to viem — what broke and what got better"
 categories: tech
 tags: [web3, typescript, devtools, viem]
 comments: True

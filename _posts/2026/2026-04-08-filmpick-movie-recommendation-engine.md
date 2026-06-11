@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "filmpick — a local movie recommendation engine, renamed"
+title:  "filmpick — a movie recommender with nothing to sell you"
 categories: tech
 tags: [nextjs, python, sqlite, tmdb, movies, recommendation-engine]
 comments: True
