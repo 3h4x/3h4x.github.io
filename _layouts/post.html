@@ -70,3 +70,37 @@ layout: default
 
   <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
 </article>
+
+<script>
+  // Heading anchors: hover a section heading to reveal a #, click it to copy a
+  // direct link to that section (and jump there). IDs come from kramdown auto_ids.
+  (function () {
+    var content = document.querySelector('.post-content');
+    if (!content) { return; }
+    var heads = content.querySelectorAll('h2[id], h3[id], h4[id]');
+    Array.prototype.forEach.call(heads, function (h) {
+      var a = document.createElement('a');
+      a.className = 'heading-anchor';
+      a.href = '#' + h.id;
+      a.textContent = '#';
+      a.setAttribute('aria-label', 'Copy link to this section');
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        var url = location.origin + location.pathname + location.search + '#' + h.id;
+        if (history.replaceState) { history.replaceState(null, '', '#' + h.id); }
+        else { location.hash = h.id; }
+        h.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        var flash = function () {
+          a.classList.add('copied');
+          setTimeout(function () { a.classList.remove('copied'); }, 1400);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(flash, flash);
+        } else {
+          flash();
+        }
+      });
+      h.appendChild(a);
+    });
+  })();
+</script>

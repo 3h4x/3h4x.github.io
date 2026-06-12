@@ -345,6 +345,60 @@ table {
 
 
 // ---------------------------------------------------------------------------
+// Heading anchor links (hover a section heading, click to copy its link)
+// ---------------------------------------------------------------------------
+
+.post-content {
+  h2, h3, h4 {
+    scroll-margin-top: 1.5rem;   // jumped-to headings sit a little below the top
+  }
+
+  .heading-anchor {
+    margin-left: 0.4em;
+    font-weight: 400;
+    color: var(--text-muted);
+    text-decoration: none;
+    opacity: 0;
+    user-select: none;
+    transition: opacity 0.15s ease, color 0.15s ease;
+
+    &:hover,
+    &:focus {
+      opacity: 1;
+      color: var(--link-color);
+      text-decoration: none;
+    }
+  }
+
+  h2:hover .heading-anchor,
+  h3:hover .heading-anchor,
+  h4:hover .heading-anchor,
+  .heading-anchor:focus { opacity: 0.5; }
+
+  .heading-anchor.copied {
+    position: relative;
+    opacity: 1;
+    color: var(--link-color);
+
+    &::after {
+      content: "Link copied";
+      position: absolute;
+      left: calc(100% + 0.6rem);   // sit just past the # glyph, size-independent gap
+      top: 50%;
+      transform: translateY(-50%);
+      white-space: nowrap;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #fff;
+      background: var(--link-color);
+      padding: 3px 10px;
+      border-radius: 10px;
+    }
+  }
+}
+
+
+// ---------------------------------------------------------------------------
 // Post list (homepage)
 // ---------------------------------------------------------------------------
 
