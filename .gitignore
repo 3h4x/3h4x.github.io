@@ -10,3 +10,5 @@ _posts/.DS_Store
 *.png
 !assets/**/*.png
 .DS_Store
+__pycache__/
+*.pyc
