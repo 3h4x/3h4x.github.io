@@ -172,7 +172,7 @@ The defensive posture of "use tools from reputable vendors" is doing less work t
 
 - **Digest pinning everywhere** — the boring, tedious fix that nobody wants to do until they have to
 - **Egress control on CI runners** — most CI jobs don't need internet-at-large, they need npm, pypi, Docker Hub, and maybe your artifact store. Allowlisting outbound is painful but tractable
-- **Ephemeral runners** — self-hosted runners that come up fresh for each job and get destroyed after. I set this up with Ansible for a bunch of projects on `goro`, worth the effort
+- **Ephemeral runners** — self-hosted runners that come up fresh for each job and get destroyed after. I set this up with Ansible for a bunch of projects on my own boxes, worth the effort
 - **Scoped tokens** — the PAT you give your scanning action should not be able to `push` anywhere. Fine-grained tokens are finally decent, use them
 
 This is the dull operational stuff that doesn't make for exciting conference talks. It also would've contained the blast radius of the KICS attack.

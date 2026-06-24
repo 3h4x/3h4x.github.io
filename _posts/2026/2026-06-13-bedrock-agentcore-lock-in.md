@@ -40,7 +40,7 @@ auth_config = {
 }
 
 gateway = gw.create_gateway(
-    name="goro-tools",
+    name="my-tools",
     roleArn="<gateway_iam_role>",
     protocolType="MCP",
     authorizerType="CUSTOM_JWT",
@@ -85,7 +85,7 @@ Here's the part I actually like, and it's the part that's *portable*: the agent 
 from langchain_mcp_adapters.client import MultiServerMCPClient
 
 client = MultiServerMCPClient({
-    "goro": {
+    "my-tools": {
         "url": gateway_endpoint,
         "transport": "streamable_http",
         "headers": {"Authorization": f"Bearer {jwt}"},
@@ -93,7 +93,7 @@ client = MultiServerMCPClient({
 })
 ```
 
-If you decide to rip the Gateway out and run your own MCP server on `goro` next month, your agent code doesn't change. **That's the whole value of building on an open protocol instead of a proprietary SDK.** AWS gets this right here — they bet on MCP and A2A instead of inventing a Bedrock-only tool format. The semantic tool-search feature (`x_amz_bedrock_agentcore_search`, so your agent doesn't drown in 400 tool definitions) is AWS-flavored, but it's an *optional* MCP tool, not a fork of the protocol.
+If you decide to rip the Gateway out and run your own MCP server on a box you control next month, your agent code doesn't change. **That's the whole value of building on an open protocol instead of a proprietary SDK.** AWS gets this right here — they bet on MCP and A2A instead of inventing a Bedrock-only tool format. The semantic tool-search feature (`x_amz_bedrock_agentcore_search`, so your agent doesn't drown in 400 tool definitions) is AWS-flavored, but it's an *optional* MCP tool, not a fork of the protocol.
 
 A2A is the same story: AgentCore Runtime added Agent-to-Agent protocol support in November 2025, with broader coverage rolling across the other services. Again — open spec, so a remote agent on your infra and an agent on Runtime can talk without an AWS-specific shim.
 
@@ -139,7 +139,7 @@ If you need that — and in a regulated shop you will — you're wiring it yours
 
 I'll publish the OpenLineage emitter from the PoC in a follow-up, once it's cleaned up enough to be worth copying.
 
-The other holes, for completeness: cross-cloud agent identity (AgentCore Identity is great inside AWS; the second you have agents on `goro` and on AWS you're back to SPIFFE/SPIRE territory), and agent-native payments — there is no x402 story in Bedrock, so micropayment-metered tools stay your problem.
+The other holes, for completeness: cross-cloud agent identity (AgentCore Identity is great inside AWS; the second you have agents on your own infra and on AWS you're back to SPIFFE/SPIRE territory), and agent-native payments — there is no x402 story in Bedrock, so micropayment-metered tools stay your problem.
 
 ## The honest lock-in map
 
@@ -161,7 +161,7 @@ The pattern: **AWS bet on open protocols for the data plane and kept the control
 ## When NOT to use this
 
 - **You have one agent and three tools.** AgentCore is enterprise plumbing. Run an MCP server on a box, point your agent at it, done. Don't buy a managed control plane to dodge writing 40 lines.
-- **You're multi-cloud or self-host-first** (hi, that's me with `goro`). Memory and Identity will fight you. Use the open layers — MCP, A2A, Cedar, OTel — and skip the managed services, or you're paying the AWS tax to re-export everything.
+- **You're multi-cloud or self-host-first** (hi, that's me). Memory and Identity will fight you. Use the open layers — MCP, A2A, Cedar, OTel — and skip the managed services, or you're paying the AWS tax to re-export everything.
 - **Your moat is the agent runtime itself.** If *how* your agents execute is the product, don't hand the runtime to a vendor whose roadmap you don't control. Half of what I listed above was still "preview" in December — building your compliance story on a preview API is a choice.
 - **You just need a chatbot with a content filter.** Guardrails alone, no AgentCore. You're done by lunch.
 
