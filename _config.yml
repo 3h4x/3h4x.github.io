@@ -40,6 +40,9 @@ pages_list:
   Tags: '/tags'
 
 google_analytics: 'UA-58462461-1'
+# Self-hosted, cookie-free analytics (stats.datacrash.io). dc.js is a deliberate
+# ad-block-resistant alias for Umami's default script.js -- do not rename it.
+umami_website_id: 'ba3a4d43-c6d7-4f44-a7bd-285c0be7adf4'
 
 port: 4001
 livereload: true
