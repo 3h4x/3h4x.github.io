@@ -1,0 +1,263 @@
+<figure class="dg tts" data-tts>
+  <div class="tts-scroll"><svg class="tts-svg" viewBox="0 0 760 330" role="img" aria-labelledby="tts-title tts-desc">
+    <title id="tts-title">One agent run in its sandbox</title>
+    <desc id="tts-desc">A trusted prepare step clones the repository with its own git token and hands the context to the model. The model runs in a sandbox without credentials; its only way out is an egress proxy that allows the model API and the package cache and refuses everything else. The model writes an outbox, and a trusted publish step opens the pull request with its own token.</desc>
+
+    <g class="tts-world">
+      <g class="tts-host" data-host="api"><rect x="232" y="20" width="136" height="40" rx="20"/><text x="300" y="45" text-anchor="middle">model API</text></g>
+      <g class="tts-host" data-host="cache"><rect x="384" y="20" width="136" height="40" rx="20"/><text x="452" y="45" text-anchor="middle">package cache</text></g>
+      <g class="tts-host tts-host--deny" data-host="other"><rect x="536" y="20" width="136" height="40" rx="20"/><text x="604" y="45" text-anchor="middle">anything else</text></g>
+      <path class="tts-wire" d="M480,130 C480,95 300,95 300,60"/>
+      <path class="tts-wire" d="M480,130 C480,95 452,95 452,60"/>
+      <path class="tts-wire tts-wire--deny" d="M480,130 C480,95 604,95 604,60"/>
+    </g>
+
+    <rect class="tts-sandbox" x="214" y="112" width="332" height="196" rx="16"/>
+    <text class="tts-label" x="232" y="296">sandbox: no git token, no cluster token, no DNS</text>
+
+    <g class="tts-proxy"><rect x="436" y="126" width="88" height="34" rx="8"/><text x="480" y="148" text-anchor="middle">proxy</text></g>
+    <path class="tts-wire" d="M400,190 C440,190 480,185 480,160"/>
+    <g class="tts-deny-mark"><circle cx="480" cy="100" r="13"/><path d="M474,94 L486,106 M486,94 L474,106"/></g>
+
+    <g class="tts-box tts-prepare"><rect x="20" y="150" width="150" height="110" rx="12"/>
+      <text class="tts-box-title" x="40" y="180">prepare</text>
+      <text class="tts-small" x="40" y="204">clones the repo,</text>
+      <text class="tts-small" x="40" y="222">writes the context</text>
+      <g class="tts-key" transform="translate(40,236)"><circle cx="7" cy="7" r="6"/><path d="M13,7 H30 M24,7 V12 M29,7 V11"/></g>
+      <text class="tts-small tts-key-label" x="78" y="248">git token</text>
+    </g>
+
+    <g class="tts-model"><rect x="236" y="150" width="164" height="110" rx="12"/>
+      <text class="tts-box-title tts-provider" x="254" y="180">Claude Code</text>
+      <g class="tts-diff"></g>
+    </g>
+
+    <g class="tts-box tts-publish"><rect x="590" y="150" width="150" height="110" rx="12"/>
+      <text class="tts-box-title" x="610" y="180">publish</text>
+      <text class="tts-small" x="610" y="204">checks the outbox,</text>
+      <text class="tts-small" x="610" y="222">acts on GitHub</text>
+      <g class="tts-key" transform="translate(610,236)"><circle cx="7" cy="7" r="6"/><path d="M13,7 H30 M24,7 V12 M29,7 V11"/></g>
+      <text class="tts-small tts-key-label" x="648" y="248">git token</text>
+    </g>
+
+    <g class="tts-pr"><rect x="600" y="278" width="130" height="32" rx="16"/><text x="665" y="299" text-anchor="middle">pull request</text></g>
+
+    <g class="tts-movers"></g>
+  </svg></div>
+  <figcaption class="tts-status"></figcaption>
+</figure>
+<style>
+.dg{--dg-ink:#1d2433;--dg-text:#3a4352;--dg-muted:#6a7383;--dg-faint:#8a93a3;--dg-line:#dde1e8;--dg-surface:#fff;--dg-panel:#f3f5f9;--dg-stroke:#c9d0db;--dg-stroke-strong:#9aa4b5;--dg-blue:#2b59c3;--dg-blue-soft:#e8eefb;--dg-blue-panel:#f4f7fe;--dg-green:#2f9e58;--dg-green-soft:#e2f3e8;--dg-green-text:#23794a;--dg-red:#d1453b;--dg-red-soft:#fbe7e5;--dg-red-text:#b2342b;--dg-amber:#a8741a;--dg-amber-dot:#d39a2c;--dg-amber-line:#e2b867;--dg-amber-soft:#fdf1dc;--dg-on-color:#fff}
+[data-theme="dark"] .dg{--dg-ink:#e6e9ef;--dg-text:#c9d1d9;--dg-muted:#9aa3b2;--dg-faint:#7d8696;--dg-line:#2e3342;--dg-surface:#22253a;--dg-panel:#1f2232;--dg-stroke:#3a4052;--dg-stroke-strong:#5b6478;--dg-blue:#5b86ee;--dg-blue-soft:#26304d;--dg-blue-panel:#232b45;--dg-green:#3fa865;--dg-green-soft:#1f3a2b;--dg-green-text:#86d6a4;--dg-red:#dd5b51;--dg-red-soft:#3d2224;--dg-red-text:#f19a92;--dg-amber:#e0a84a;--dg-amber-dot:#e0a84a;--dg-amber-line:#9a7330;--dg-amber-soft:#3a3020;--dg-on-color:#fff}
+
+.tts{margin:1.75em 0 2em}
+.tts-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tts-svg{display:block;width:100%;min-width:600px;height:auto;overflow:visible}
+.tts-host rect{fill:var(--dg-surface);stroke:var(--dg-stroke);stroke-width:1.5;transition:fill .3s,stroke .3s}
+.tts-host text{font-size:15px;fill:var(--dg-text)}
+.tts-host.is-hit rect{fill:var(--dg-green-soft);stroke:var(--dg-green)}
+.tts-host--deny text{fill:var(--dg-faint)}
+.tts-wire{fill:none;stroke:var(--dg-line);stroke-width:2}
+.tts-wire--deny{stroke-dasharray:3 5}
+.tts-sandbox{fill:var(--dg-panel);stroke:var(--dg-stroke-strong);stroke-width:1.5;stroke-dasharray:6 6}
+.tts-label{font-size:13px;fill:var(--dg-muted)}
+.tts-proxy rect{fill:var(--dg-surface);stroke:var(--dg-muted);stroke-width:1.5}
+.tts-proxy text{font-size:14px;font-weight:600;fill:var(--dg-text)}
+.tts-box rect{fill:var(--dg-surface);stroke:var(--dg-stroke);stroke-width:1.5;transition:stroke .3s,fill .3s}
+.tts-box.is-on rect{stroke:var(--dg-blue);fill:var(--dg-blue-panel)}
+.tts-box-title{font-size:17px;font-weight:650;fill:var(--dg-ink)}
+.tts-small{font-size:13.5px;fill:var(--dg-muted)}
+.tts-key circle,.tts-key path{fill:none;stroke:var(--dg-amber);stroke-width:2.2;stroke-linecap:round}
+.tts-key-label{fill:var(--dg-amber)}
+.tts-model rect{fill:var(--dg-surface);stroke:var(--dg-blue);stroke-width:2;transition:fill .3s}
+.tts-model.is-on rect{fill:var(--dg-blue-panel)}
+.tts-provider{transition:opacity .3s}
+.tts-diff rect{transition:opacity .25s}
+.tts-deny-mark{opacity:0;transition:opacity .25s}
+.tts-deny-mark circle{fill:var(--dg-red-soft);stroke:var(--dg-red);stroke-width:2}
+.tts-deny-mark path{stroke:var(--dg-red);stroke-width:2.6;stroke-linecap:round}
+.tts-deny-mark.is-on{opacity:1}
+.tts-pr{opacity:0;transform:translateY(6px);transition:opacity .35s,transform .35s;transform-box:fill-box}
+.tts-pr.is-on{opacity:1;transform:none}
+.tts-pr rect{fill:var(--dg-green)}
+.tts-pr text{font-size:14px;font-weight:650;fill:var(--dg-on-color)}
+.tts-status{margin:.6em auto 0;max-width:34em;min-height:3em;text-align:center;font-size:16px;line-height:1.5;color:var(--dg-text);transition:opacity .25s}
+.tts-status b{font-weight:650;color:var(--dg-blue)}
+.tts-file-sheet{fill:var(--dg-surface);stroke:var(--dg-blue);stroke-width:1.6}
+.tts-file-lines{fill:none;stroke:var(--dg-blue);stroke-width:1.4}
+.tts-env-body{fill:var(--dg-blue)}
+.tts-env-flap{fill:none;stroke:var(--dg-on-color);stroke-width:1.6}
+.tts-dot--ok{fill:var(--dg-green)}.tts-dot--deny{fill:var(--dg-red)}
+.tts-bar--add{fill:var(--dg-green)}.tts-bar--del{fill:var(--dg-red)}
+</style>
+<script>
+(function () {
+  var NS = 'http://www.w3.org/2000/svg';
+  var AGENTS = ['Claude Code', 'Codex', 'Antigravity', 'LiteLLM'];
+  var PATHS = {
+    files: ['M170,190 C200,190 210,200 250,205', 'M170,205 C200,205 210,215 250,220', 'M170,220 C200,220 210,230 250,235'],
+    out: 'M400,190 C440,190 480,185 480,160 L480,130',
+    api: 'M480,130 C480,95 300,95 300,60',
+    cache: 'M480,130 C480,95 452,95 452,60',
+    other: 'M480,130 C480,108 486,104 488,100',
+    outbox: 'M400,235 C480,235 520,235 590,235'
+  };
+
+  function init(fig) {
+    var svg = fig.querySelector('svg');
+    var movers = fig.querySelector('.tts-movers');
+    var status = fig.querySelector('.tts-status');
+    var model = fig.querySelector('.tts-model');
+    var provider = fig.querySelector('.tts-provider');
+    var diff = fig.querySelector('.tts-diff');
+    var prep = fig.querySelector('.tts-prepare');
+    var pub = fig.querySelector('.tts-publish');
+    var pr = fig.querySelector('.tts-pr');
+    var deny = fig.querySelector('.tts-deny-mark');
+    var hosts = {};
+    fig.querySelectorAll('.tts-host').forEach(function (h) { hosts[h.dataset.host] = h; });
+    var probe = document.createElementNS(NS, 'path');
+    probe.setAttribute('fill', 'none');
+    svg.appendChild(probe);
+
+    // Diff lines the model "writes": green additions, a red deletion.
+    var LINES = [[0, 92, 'add'], [1, 64, 'add'], [2, 110, 'del'], [3, 78, 'add']];
+    var bars = LINES.map(function (l) {
+      var r = document.createElementNS(NS, 'rect');
+      r.setAttribute('x', 254); r.setAttribute('y', 196 + l[0] * 14); r.setAttribute('height', 7);
+      r.setAttribute('width', l[1]); r.setAttribute('rx', 3.5); r.setAttribute('class', 'tts-bar tts-bar--' + l[2]);
+      r.style.opacity = 0;
+      diff.appendChild(r);
+      return r;
+    });
+
+    function el(tag, attrs) {
+      var e = document.createElementNS(NS, tag);
+      for (var k in attrs) e.setAttribute(k, attrs[k]);
+      return e;
+    }
+    function fileToken() {
+      var g = el('g', {});
+      g.appendChild(el('rect', { x: -8, y: -10, width: 16, height: 20, rx: 2.5, class: 'tts-file-sheet', 'stroke-width': 1.6 }));
+      g.appendChild(el('path', { d: 'M-4,-4 H4 M-4,0 H4 M-4,4 H2', class: 'tts-file-lines' }));
+      return g;
+    }
+    function dot(kind) { return el('circle', { r: 6, class: 'tts-dot tts-dot--' + kind }); }
+    function envelope() {
+      var g = el('g', {});
+      g.appendChild(el('rect', { x: -14, y: -10, width: 28, height: 20, rx: 3, class: 'tts-env-body' }));
+      g.appendChild(el('path', { d: 'M-13,-8 L0,2 L13,-8', class: 'tts-env-flap' }));
+      return g;
+    }
+    function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+    function travel(node, d, speed) {
+      probe.setAttribute('d', d);
+      var len = probe.getTotalLength(), dur = Math.max(450, len * (speed || 5));
+      var pts = [];
+      for (var i = 0; i <= 60; i++) pts.push(probe.getPointAtLength(len * i / 60));
+      return new Promise(function (done) {
+        var t0 = null;
+        function frame(t) {
+          if (t0 === null) t0 = t;
+          var k = Math.min(1, (t - t0) / dur);
+          var e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+          var p = pts[Math.round(e * 60)];
+          node.setAttribute('transform', 'translate(' + p.x + ',' + p.y + ')');
+          if (k < 1) requestAnimationFrame(frame); else done();
+        }
+        requestAnimationFrame(frame);
+      });
+    }
+    function say(html) {
+      status.style.opacity = 0;
+      setTimeout(function () { status.innerHTML = html; status.style.opacity = 1; }, 220);
+    }
+    function reset() {
+      movers.textContent = '';
+      bars.forEach(function (b) { b.style.opacity = 0; });
+      [prep, pub, model].forEach(function (n) { n.classList.remove('is-on'); });
+      Object.keys(hosts).forEach(function (k) { hosts[k].classList.remove('is-hit'); });
+      deny.classList.remove('is-on');
+      pr.classList.remove('is-on');
+    }
+
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      bars.forEach(function (b) { b.style.opacity = 1; });
+      deny.classList.add('is-on'); pr.classList.add('is-on');
+      provider.textContent = 'Claude Code, Codex, …';
+      status.textContent = 'Only the trusted steps hold a git token. The model in the middle reaches nothing but the model API and the package cache, and asks for a pull request through its outbox.';
+      return;
+    }
+
+    var visible = false, wake = null;
+    function waitVisible() { return visible ? Promise.resolve() : new Promise(function (r) { wake = r; }); }
+
+    async function cycle(round) {
+      var name = AGENTS[round % AGENTS.length];
+      reset();
+      provider.style.opacity = 0;
+      await sleep(250);
+      provider.textContent = name;
+      provider.style.opacity = 1;
+
+      await waitVisible();
+      prep.classList.add('is-on');
+      say('<b>prepare</b> clones the repo with its own git token and writes the issue, the plan and the CI logs as files.');
+      var files = PATHS.files.map(function (d) { var f = fileToken(); var m = d.match(/^M(\S+?),(\S+)/); f.setAttribute('transform', 'translate(' + m[1] + ',' + parseFloat(m[2]) + ')'); f.style.opacity = 0; movers.appendChild(f); return f; });
+      await Promise.all(files.map(function (f, i) { return sleep(i * 220).then(function () { f.style.opacity = 1; return travel(f, PATHS.files[i], 7); }); }));
+      await sleep(400);
+      files.forEach(function (f) { f.remove(); });
+      prep.classList.remove('is-on');
+
+      await waitVisible();
+      model.classList.add('is-on');
+      say('<b>' + name + '</b> works in the sandbox. It never gets a git or cluster credential.');
+      for (var i = 0; i < bars.length; i++) { await sleep(420); bars[i].style.opacity = 1; }
+      await sleep(700);
+
+      await waitVisible();
+      say('Its only way out is the proxy, which lets it reach the model API and the package cache.');
+      var a = dot('ok'); movers.appendChild(a);
+      await travel(a, PATHS.out, 4); await travel(a, PATHS.api, 4); hosts.api.classList.add('is-hit');
+      var c = dot('ok'); movers.appendChild(c);
+      await travel(c, PATHS.out, 3); await travel(c, PATHS.cache, 4); hosts.cache.classList.add('is-hit');
+      await sleep(900);
+      a.remove(); c.remove();
+
+      await waitVisible();
+      say('Anything else is refused at the proxy, and there is no DNS to look for another way out.');
+      var x = dot('deny'); movers.appendChild(x);
+      await travel(x, PATHS.out, 4); await travel(x, PATHS.other, 9);
+      deny.classList.add('is-on'); x.remove();
+      await sleep(1800);
+
+      await waitVisible();
+      say('It cannot open a pull request. It writes what it wants done into an outbox.');
+      var env = envelope(); movers.appendChild(env);
+      await travel(env, PATHS.outbox, 6);
+      model.classList.remove('is-on');
+      pub.classList.add('is-on');
+      env.remove();
+      await sleep(500);
+      say('<b>publish</b> checks the outbox and opens the pull request with its own git token.');
+      await sleep(700);
+      pr.classList.add('is-on');
+      await sleep(2800);
+    }
+
+    async function run() { for (var round = 0; ; round++) await cycle(round); }
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        visible = es[0].isIntersecting;
+        if (visible && wake) { wake(); wake = null; }
+      }, { threshold: .35 }).observe(fig);
+    } else { visible = true; }
+    run();
+  }
+
+  document.querySelectorAll('[data-tts]').forEach(function (fig) {
+    if (!fig.dataset.ready) { fig.dataset.ready = '1'; init(fig); }
+  });
+})();
+</script>

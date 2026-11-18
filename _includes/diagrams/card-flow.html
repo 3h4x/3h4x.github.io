@@ -1,0 +1,202 @@
+<figure class="dg ttf" data-ttf>
+  <div class="ttf-scroll"><svg class="ttf-svg" viewBox="0 0 760 236" role="img" aria-labelledby="ttf-title ttf-desc">
+    <title id="ttf-title">How a card moves through the board</title>
+    <desc id="ttf-desc">An issue moves from Todo to Plan, Work and Review. CI fails, so it loops back to Work. After the fix it passes Review, then Verify, and lands in Done. Any stage can stop at Blocked when the system needs a human answer.</desc>
+    <path class="ttf-track" d="M60,120 H690"/>
+    <path class="ttf-track" d="M420,120 C420,205 300,205 300,120"/>
+    <path class="ttf-trail" d="M60,120 H60"/>
+    <path class="ttf-trail ttf-trail--loop" d="M420,120 C420,205 300,205 300,120"/>
+    <text class="ttf-note" x="360" y="214" text-anchor="middle">fix and retry</text>
+    <path class="ttf-track ttf-track--blocked" d="M610,120 V188"/>
+    <circle class="ttf-blocked-dot" cx="610" cy="188" r="7"/>
+    <text class="ttf-note ttf-note--blocked" x="624" y="193">Blocked</text>
+    <text class="ttf-note" x="624" y="212">waits for a human</text>
+    <g class="ttf-stations"></g>
+    <g class="ttf-badge"><rect rx="13" height="26"/><text text-anchor="middle" y="18"></text></g>
+    <g class="ttf-card"><rect x="-21" y="-13" width="42" height="26" rx="7"/><text text-anchor="middle" y="5">#42</text></g>
+  </svg></div>
+  <figcaption class="ttf-status"></figcaption>
+</figure>
+<style>
+.dg{--dg-ink:#1d2433;--dg-text:#3a4352;--dg-muted:#6a7383;--dg-faint:#8a93a3;--dg-line:#dde1e8;--dg-surface:#fff;--dg-panel:#f3f5f9;--dg-stroke:#c9d0db;--dg-stroke-strong:#9aa4b5;--dg-blue:#2b59c3;--dg-blue-soft:#e8eefb;--dg-blue-panel:#f4f7fe;--dg-green:#2f9e58;--dg-green-soft:#e2f3e8;--dg-green-text:#23794a;--dg-red:#d1453b;--dg-red-soft:#fbe7e5;--dg-red-text:#b2342b;--dg-amber:#a8741a;--dg-amber-dot:#d39a2c;--dg-amber-line:#e2b867;--dg-amber-soft:#fdf1dc;--dg-on-color:#fff}
+[data-theme="dark"] .dg{--dg-ink:#e6e9ef;--dg-text:#c9d1d9;--dg-muted:#9aa3b2;--dg-faint:#7d8696;--dg-line:#2e3342;--dg-surface:#22253a;--dg-panel:#1f2232;--dg-stroke:#3a4052;--dg-stroke-strong:#5b6478;--dg-blue:#5b86ee;--dg-blue-soft:#26304d;--dg-blue-panel:#232b45;--dg-green:#3fa865;--dg-green-soft:#1f3a2b;--dg-green-text:#86d6a4;--dg-red:#dd5b51;--dg-red-soft:#3d2224;--dg-red-text:#f19a92;--dg-amber:#e0a84a;--dg-amber-dot:#e0a84a;--dg-amber-line:#9a7330;--dg-amber-soft:#3a3020;--dg-on-color:#fff}
+
+.ttf{margin:1.75em 0 2em}
+.ttf-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.ttf-svg{display:block;width:100%;min-width:560px;height:auto;overflow:visible}
+.ttf-track{fill:none;stroke:var(--dg-line);stroke-width:7;stroke-linecap:round}
+.ttf-trail{fill:none;stroke:var(--dg-blue);stroke-width:7;stroke-linecap:round}
+.ttf-trail--loop{stroke:var(--dg-red);opacity:0;transition:opacity .4s}
+.ttf-trail--loop.is-on{opacity:1}
+.ttf-track--blocked{stroke:var(--dg-amber-line);stroke-width:4;stroke-dasharray:1 9}
+.ttf-blocked-dot{fill:var(--dg-surface);stroke:var(--dg-amber-dot);stroke-width:3}
+.ttf-note{font-size:14px;fill:var(--dg-faint)}
+.ttf-note--blocked{font-size:16px;font-weight:600;fill:var(--dg-amber)}
+.ttf-st circle{fill:var(--dg-surface);stroke:var(--dg-stroke-strong);stroke-width:3;transition:fill .35s,stroke .35s}
+.ttf-st text{font-size:17px;font-weight:500;fill:var(--dg-muted);transition:fill .35s}
+.ttf-st.is-seen circle{fill:var(--dg-blue);stroke:var(--dg-blue)}
+.ttf-st.is-fail circle{fill:var(--dg-red);stroke:var(--dg-red)}
+.ttf-st.is-here text{fill:var(--dg-ink);font-weight:650}
+.ttf-st.is-end.is-seen circle{fill:var(--dg-green);stroke:var(--dg-green)}
+.ttf-card rect{fill:var(--dg-blue);transition:fill .35s}
+.ttf-card text{font-size:13px;font-weight:650;fill:var(--dg-on-color)}
+.ttf-card.is-done rect{fill:var(--dg-green)}
+.ttf-badge{opacity:0;transition:opacity .3s}
+.ttf-badge.is-on{opacity:1}
+.ttf-badge text{font-size:14px;font-weight:600}
+.ttf-badge.is-fail rect{fill:var(--dg-red-soft)}.ttf-badge.is-fail text{fill:var(--dg-red-text)}
+.ttf-badge.is-ok rect{fill:var(--dg-green-soft)}.ttf-badge.is-ok text{fill:var(--dg-green-text)}
+.ttf-who{display:inline-block;margin-right:.5em;padding:.05em .55em;border-radius:1em;background:var(--dg-blue-soft);color:var(--dg-blue);font-size:14px;font-weight:600;white-space:nowrap}
+.ttf-who.is-you{background:var(--dg-amber-soft);color:var(--dg-amber)}
+.ttf-status{margin:.6em auto 0;max-width:34em;min-height:3em;text-align:center;font-size:16px;line-height:1.5;color:var(--dg-text);transition:opacity .25s}
+</style>
+<script>
+(function () {
+  var NS = 'http://www.w3.org/2000/svg';
+  var Y = 120;
+  var STATIONS = [['Todo', 60], ['Plan', 180], ['Work', 300], ['Review', 420], ['Verify', 540], ['Done', 690]];
+  var AGENTS = ['Claude Code', 'Codex', 'Antigravity', 'LiteLLM'];
+  var LOOP = 'M420,120 C420,205 300,205 300,120';
+  // Each step: move along a path (or stay), then show what happened there.
+  var STEPS = [
+    { at: 0, who: 'you', text: 'Write an issue: what is broken or what you want.', wait: 1800 },
+    { at: 1, agent: 0, text: 'Reads the repo and writes a plan and a checklist for done.', wait: 2200 },
+    { at: 2, agent: 1, text: 'Writes the code in its sandbox and opens a pull request.', wait: 2200 },
+    { at: 3, fail: 'CI failed', agent: 2, text: 'Reviews the pull request. CI fails, so the card goes back to Work with the failing logs.', wait: 2300 },
+    { at: 2, path: LOOP, agent: 1, text: 'Fixes it on the same pull request.', wait: 1700 },
+    { at: 3, ok: 'CI green, review clean', agent: 2, text: 'Reviews again. CI passes and the review is clean, so it merges and deploys.', wait: 2300 },
+    { at: 4, agent: 3, text: 'Checks every item of the checklist on the live system.', wait: 2300 },
+    { at: 5, done: true, who: 'you', text: 'Nothing to do: everything checked out, so the issue closed itself.', wait: 3200 }
+  ];
+
+  function init(fig) {
+    var svg = fig.querySelector('svg');
+    var card = fig.querySelector('.ttf-card');
+    var badge = fig.querySelector('.ttf-badge');
+    var status = fig.querySelector('.ttf-status');
+    var layer = fig.querySelector('.ttf-stations');
+    var st = STATIONS.map(function (s, i) {
+      var g = document.createElementNS(NS, 'g');
+      g.setAttribute('class', 'ttf-st' + (i === STATIONS.length - 1 ? ' is-end' : ''));
+      var c = document.createElementNS(NS, 'circle');
+      c.setAttribute('cx', s[1]); c.setAttribute('cy', Y); c.setAttribute('r', i === STATIONS.length - 1 ? 12 : 10);
+      var t = document.createElementNS(NS, 'text');
+      t.setAttribute('x', s[1]); t.setAttribute('y', Y - 30); t.setAttribute('text-anchor', 'middle');
+      t.textContent = s[0];
+      g.appendChild(c); g.appendChild(t); layer.appendChild(g);
+      return g;
+    });
+    var probe = document.createElementNS(NS, 'path');
+    probe.setAttribute('fill', 'none');
+    svg.appendChild(probe);
+
+    function place(x, y) { card.setAttribute('transform', 'translate(' + x + ',' + y + ')'); }
+    function mark(i, cls, on) { st[i].classList.toggle(cls, on); }
+    function here(i) { st.forEach(function (g, j) { g.classList.toggle('is-here', i === j); }); mark(i, 'is-seen', true); }
+    function say(text, who) {
+      status.style.opacity = 0;
+      setTimeout(function () {
+        status.textContent = '';
+        if (who) {
+          var b = document.createElement('span');
+          b.className = 'ttf-who' + (who === 'You' ? ' is-you' : '');
+          b.textContent = who;
+          status.appendChild(b);
+        }
+        status.appendChild(document.createTextNode(text));
+        status.style.opacity = 1;
+      }, 220);
+    }
+    function showBadge(text, kind, x) {
+      var label = badge.querySelector('text');
+      label.textContent = text;
+      var w = Math.ceil(label.getComputedTextLength()) + 26;
+      var r = badge.querySelector('rect');
+      r.setAttribute('width', w); r.setAttribute('x', -w / 2);
+      badge.setAttribute('transform', 'translate(' + x + ',' + (Y - 82) + ')');
+      badge.setAttribute('class', 'ttf-badge is-on ' + kind);
+    }
+    function hideBadge() { badge.classList.remove('is-on'); }
+
+    var visible = false, wake = null, cur = 0;
+    function waitVisible() {
+      return visible ? Promise.resolve() : new Promise(function (r) { wake = r; });
+    }
+    function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+    var trail = fig.querySelector('.ttf-trail'), loopTrail = fig.querySelector('.ttf-trail--loop'), reach = 60;
+    function move(d, onMain) {
+      probe.setAttribute('d', d);
+      var len = probe.getTotalLength();
+      var dur = Math.max(700, len * 6.5);
+      return new Promise(function (done) {
+        var t0 = null;
+        function frame(t) {
+          if (t0 === null) t0 = t;
+          var k = Math.min(1, (t - t0) / dur);
+          var e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+          var p = probe.getPointAtLength(len * e);
+          place(p.x, p.y);
+          if (onMain && p.x > reach) { reach = p.x; trail.setAttribute('d', 'M60,120 H' + reach); }
+          if (k < 1) requestAnimationFrame(frame); else done();
+        }
+        requestAnimationFrame(frame);
+      });
+    }
+    function reset() {
+      st.forEach(function (g) { g.classList.remove('is-seen', 'is-here', 'is-fail'); });
+      card.classList.remove('is-done');
+      hideBadge();
+      cur = 0; place(STATIONS[0][1], Y);
+      reach = 60; trail.setAttribute('d', 'M60,120 H60'); loopTrail.classList.remove('is-on');
+    }
+
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      st.forEach(function (g) { g.classList.add('is-seen'); });
+      card.classList.add('is-done');
+      place(STATIONS[5][1], Y);
+      status.textContent = 'An issue goes from Todo to Done on its own. A failed check sends it back to Work; a question for a human parks it in Blocked.';
+      return;
+    }
+
+    var round = 0;
+    async function run() {
+      for (;; round++) {
+        reset();
+        for (var i = 0; i < STEPS.length; i++) {
+          var s = STEPS[i];
+          await waitVisible();
+          hideBadge();
+          if (s.at !== cur || s.path) {
+            if (cur === 3 && st[3].classList.contains('is-fail')) mark(3, 'is-fail', false);
+            if (s.path) loopTrail.classList.add('is-on');
+            await move(s.path || ('M' + STATIONS[cur][1] + ',' + Y + ' H' + STATIONS[s.at][1]), !s.path);
+            if (s.path) loopTrail.classList.remove('is-on');
+            cur = s.at;
+          }
+          here(cur);
+          if (s.fail) { mark(cur, 'is-fail', true); showBadge(s.fail, 'is-fail', STATIONS[cur][1]); }
+          if (s.ok) showBadge(s.ok, 'is-ok', STATIONS[cur][1]);
+          if (s.done) card.classList.add('is-done');
+          say(s.text, s.who === 'you' ? 'You' : (s.agent !== undefined ? AGENTS[(s.agent + round) % AGENTS.length] : null));
+          await sleep(s.wait);
+        }
+        await sleep(600);
+      }
+    }
+
+    reset();
+    status.textContent = STEPS[0].text;
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        visible = es[0].isIntersecting;
+        if (visible && wake) { wake(); wake = null; }
+      }, { threshold: .35 }).observe(fig);
+    } else { visible = true; }
+    run();
+  }
+
+  document.querySelectorAll('[data-ttf]').forEach(function (fig) {
+    if (!fig.dataset.ready) { fig.dataset.ready = '1'; init(fig); }
+  });
+})();
+</script>

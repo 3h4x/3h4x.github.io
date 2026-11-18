@@ -27,6 +27,7 @@ exclude:
   - .playwright-mcp
   - node_modules
   - vendor
+  - CLAUDE.md
 
 kramdown:
   input: GFM
