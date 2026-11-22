@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "What should one change cost? Seven principles for autonomous delivery that gets cheaper over time"
+title: "The price of one verified change: seven principles for autonomous delivery that gets cheaper over time"
 categories: tech
 tags: [ai, agents, autonomous-agents, unit-economics, code-review, ci-cd, kubernetes, kueue, automation, datacrash]
 comments: True
