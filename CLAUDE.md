@@ -12,6 +12,16 @@ write and preview a post (front matter, `<!-- readmore -->`, `docker compose up 
 - Credit honestly: agents write most of the code, the owner designs the systems, decides how they work and what is
   allowed. Never frame a project as one that "builds itself" or has no author.
 
+## Voice and claims
+
+- Readers include potential customers and investors. Write about how the platform works and why it is designed that
+  way, as principles and decisions. Don't tell it as a story of mistakes found and lessons learned ("it turned out",
+  "reviews didn't know when to stop"): that reads as amateur work.
+- Describe only what runs in production. A feature that is merged but default-off, opt-in or not yet enabled is not
+  claimed as live; leave it out or call it next.
+- No relative dates between posts ("two days ago"): a draft often ships days later. Link the earlier post instead
+  ("in the previous post").
+
 ## What never goes into a post
 
 Everything here is public and indexed. Do not publish, in a post, its front matter, an image, alt text, a commit message
